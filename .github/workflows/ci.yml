@@ -57,18 +57,7 @@ jobs:
       - name: Install project in editable mode (no deps)
         run: pip install -e . --no-deps
 
-      - name: Prepare Windows-style dataset/output paths for tests
-        run: |
-          # Some tests use hard-coded Windows absolute paths like 'd:/Gurobi_code/Problem2/datasets'.
-          # On Linux runners we create directories with those names and copy repository data so tests can run.
-          mkdir -p "d:/Gurobi_code/Problem2/datasets"
-          mkdir -p "d:/Gurobi_code/Problem2/outputs"
-          if [ -d "datasets" ]; then
-            cp -r datasets/* "d:/Gurobi_code/Problem2/datasets/" || true
-          fi
-          if [ -d "outputs" ]; then
-            cp -r outputs/* "d:/Gurobi_code/Problem2/outputs/" || true
-          fi
+      # Removed Windows-style path hack: tests now use pytest tmp_path fixtures
 
       - name: Run tests
         run: pytest -q
