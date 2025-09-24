@@ -34,6 +34,16 @@ Get-ChildItem -Path $alnsDir -File -Include '*.md','*.markdown','*.pdf' -ErrorAc
     try { Move-Item -LiteralPath $src -Destination $dst -Force; Write-Output ("Moved {0} -> ALNSCode/docs/" -f $_.Name) } catch { Write-Output ("Failed to move {0}: {1}" -f $src, $_.Exception.Message) }
 }
 
+# Move any remaining md/pdf in ALNSCode root (idempotent)
+Write-Output "Checking for any remaining md/pdf in ALNSCode root..."
+$remaining = Get-ChildItem -Path $alnsDir -File -Include '*.md','*.markdown','*.pdf' -ErrorAction SilentlyContinue
+foreach ($f in $remaining) {
+    $dst = Join-Path $docsDir $f.Name
+    if ($f.DirectoryName -ne $docsDir) {
+        try { Move-Item -LiteralPath $f.FullName -Destination $dst -Force; Write-Output ("Moved remaining: {0}" -f $f.Name) } catch { Write-Output ("Failed to move remaining {0}: {1}" -f $f.FullName, $_.Exception.Message) }
+    }
+}
+
 # Some files in docs have unclear names; rename the most unclear ones to descriptive names only if they exist
 $renameMap = @{
     '________.md' = 'ALNS_Performance_Review.md'
