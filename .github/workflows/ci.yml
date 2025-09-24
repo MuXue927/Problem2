@@ -47,7 +47,16 @@ jobs:
 
       - name: Install local ALNS dependency (if present)
         run: |
-          # prefer installing the local ALNS copy in the repo; fallback to PyPI
+          # Prefer installing the local `ALNS/` copy in the repo as an editable
+          # package so CI can test changes made to the in-repo ALNS source
+          # (useful when contributors modify ALNS implementation). If the
+          # repository does not include `ALNS/`, fall back to installing the
+          # published `alns` package from PyPI so external contributors without
+          # an in-repo copy can still run the workflow.
+          #
+          # Note: editable install (`pip install -e ALNS`) requires that
+          # `ALNS/pyproject.toml` (or setup.py) is present and correct. If
+          # editable install fails, we attempt a normal pip install from PyPI.
           if [ -d "ALNS" ]; then
             pip install -e ALNS || pip install alns
           else
