@@ -13,3 +13,20 @@ wheels/
 
 
 
+
+# cleanup additions
+
+# auto-generated ignores by cleanup script
+OutPut-ALNS/
+OutPut-CG/
+outputs/
+logs/
+*.log
+*.out
+*.html
+.idea/
+.vscode/
+*.iml
+.python-version
+uv.lock
+untracked_backup_*/
