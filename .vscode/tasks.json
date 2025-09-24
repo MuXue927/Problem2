@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dev: Create .venv",
+      "type": "shell",
+      "command": "python -m venv .venv",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Install wheel & setuptools",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe -m pip install --upgrade pip setuptools wheel",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Install editable package",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe -m pip install -e .",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Run tests (ALNSCode)",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe -m pytest ALNSCode/test -q",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Full setup then test",
+      "type": "shell",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& { python -m venv .venv; .\\.venv\\Scripts\\python.exe -m pip install --upgrade pip setuptools wheel; .\\.venv\\Scripts\\python.exe -m pip install -e .; .\\.venv\\Scripts\\python.exe -m pytest ALNSCode/test -q }\"",
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    }
+  ]
+}
