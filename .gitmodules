@@ -1,0 +1,3 @@
+; .gitmodules intentionally left empty to remove stale/incorrect submodule config for ALNS
+; Previously CI showed: "No url found for submodule path 'ALNS' in .gitmodules".
+; To avoid that warning we replace the repository .gitmodules with this empty file.

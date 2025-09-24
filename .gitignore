@@ -1,0 +1,32 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+\n# Ignore generated outputs and temporary backups\nOutPut-ALNS/\nOutPut-CG/\nOutPut-*/\nOutPut-*\nOutPut-*/\nOutPut-CG/\noutputs/\nlogs/\nlogs-*/\nuntracked_backup_*/\n*.out\n*.html\n
+
+
+
+
+
+# cleanup additions
+
+# auto-generated ignores by cleanup script
+OutPut-ALNS/
+OutPut-CG/
+outputs/
+logs/
+*.log
+*.out
+*.html
+.idea/
+.vscode/
+*.iml
+.python-version
+uv.lock
+untracked_backup_*/

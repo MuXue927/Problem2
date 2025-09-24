@@ -1,0 +1,5 @@
+vehicle_type,carry_standard_size,min_standard_size,cost_to_use
+8.4,99,74,1.0
+12.1,114,69,1.12
+17.2,153,77,1.3900000000000001
+17.4,157,83,1.4100000000000001

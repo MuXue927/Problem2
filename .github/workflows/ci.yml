@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10']
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # ensure checkout does not try to process submodules (this repo has a broken .gitmodules entry)
+          submodules: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install Python build tools
+        run: pip install build setuptools wheel
+
+      - name: Install core & dev tooling (skip gurobipy)
+        run: |
+          # Install common numeric / testing tools; intentionally skip gurobipy (requires license)
+          pip install numpy pandas matplotlib scikit-learn openpyxl networkx plotly mabwiser vrplib rich
+          pip install pytest pyinstrument pytest-cov
+
+      - name: Provide gurobipy stub to avoid import-time failures
+        run: |
+          mkdir -p gurobipy
+          echo "# lightweight gurobipy stub for CI tests\nclass _Stub: pass\n" > gurobipy/__init__.py
+          echo "__all__ = []" >> gurobipy/__init__.py
+          # ensure Python picks up the local stub before installed packages
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+
+      - name: Install local ALNS dependency (if present)
+        run: |
+          # Prefer installing the local `ALNS/` copy in the repo as an editable
+          # package so CI can test changes made to the in-repo ALNS source
+          # (useful when contributors modify ALNS implementation). If the
+          # repository does not include `ALNS/`, fall back to installing the
+          # published `alns` package from PyPI so external contributors without
+          # an in-repo copy can still run the workflow.
+          #
+          # Note: editable install (`pip install -e ALNS`) requires that
+          # `ALNS/pyproject.toml` (or setup.py) is present and correct. If
+          # editable install fails, we attempt a normal pip install from PyPI.
+          if [ -d "ALNS" ]; then
+            pip install -e ALNS || pip install alns
+          else
+            pip install alns
+          fi
+
+      - name: Install project in editable mode (no deps)
+        run: pip install -e . --no-deps
+
+      # Removed Windows-style path hack: tests now use pytest tmp_path fixtures
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Run profiling script (cProfile + pyinstrument)
+        run: python scripts/profile_initial_solution.py || true
+
+      - name: Upload profiling artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: profiling-reports
+          path: |
+            scripts/prof_initial_solution.out
+            scripts/prof_initial_solution.txt
+            scripts/pyinstrument_profile.html

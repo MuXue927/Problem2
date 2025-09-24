@@ -1,0 +1,913 @@
+(base) PS D:\Gurobi_code\Problem2\column-generation> python OPTCG.py
+0.0s Loading Data...
+0.0s Elapsed time:  0.04s
+Set parameter LicenseID to value 2535755
+Set parameter OutputFlag to value 1
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+0.2s Start Solving! Day 1 / Now 2025-02-23 16:17:55.366663
+0.2s Constructing load patterns...
+0.2s    RealObj=0.0     No. Alpha=361   No. Beta=0      No. Gamma=0     No. Pattern=0   TotalObj=25475000.00
+1.0s    RealObj=48.8    No. Alpha=244   No. Beta=0      No. Gamma=0     No. Pattern=616 TotalObj=17120112.02
+2.2s    RealObj=147.9   No. Alpha=158   No. Beta=0      No. Gamma=0     No. Pattern=1072        TotalObj=10864421.86
+3.7s    RealObj=201.7   No. Alpha=85    No. Beta=0      No. Gamma=0     No. Pattern=1510        TotalObj=6000400.21
+4.6s    RealObj=292.0   No. Alpha=32    No. Beta=0      No. Gamma=0     No. Pattern=1928        TotalObj=1885561.92
+5.4s    RealObj=177.8   No. Alpha=3     No. Beta=0      No. Gamma=0     No. Pattern=2360        TotalObj=160364.20
+6.1s    RealObj=120.4   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=2846        TotalObj=255.48
+6.8s    RealObj=101.5   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3416        TotalObj=223.80
+7.6s    RealObj=100.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3964        TotalObj=220.60
+8.4s    RealObj=98.7    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4562        TotalObj=219.17
+9.4s    RealObj=98.5    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5214        TotalObj=217.98
+9.4s Initializing Feasible Solution...
+9.4s Optimizing restricted master model...
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 5783 columns and 28033 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    2.1798412e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.179841159e+02
+9.5s    RealObj=98.5    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5214        TotalObj=217.98
+9.5s Set variables in the master model to integer type
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 5783 columns and 28033 nonzeros
+Model fingerprint: 0xfed4b77c
+Variable types: 0 continuous, 5783 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+Found heuristic solution: objective 4.921608e+07
+Presolve removed 14 rows and 1275 columns
+Presolve time: 0.04s
+Presolved: 413 rows, 4508 columns, 25444 nonzeros
+Found heuristic solution: objective 2.147105e+07
+Variable types: 0 continuous, 4508 integer (598 binary)
+Found heuristic solution: objective 2.043079e+07
+
+Root relaxation: objective 2.238827e+02, 629 iterations, 0.01 seconds (0.01 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  223.88273    0  249 2.0431e+07  223.88273   100%     -    0s
+H    0     0                    235478.70000  223.88273   100%     -    0s
+H    0     0                    230358.07000  223.88273   100%     -    0s
+H    0     0                     343.2000000  223.88273  34.8%     -    0s
+H    0     0                     274.4800000  223.88273  18.4%     -    0s
+H    0     0                     273.1500000  223.88273  18.0%     -    0s
+H    0     0                     271.9700000  223.88273  17.7%     -    0s
+H    0     0                     271.0400000  223.88273  17.4%     -    0s
+H    0     0                     267.6300000  223.88273  16.3%     -    0s
+H    0     0                     266.4800000  223.88273  16.0%     -    0s
+H    0     0                     265.3000000  223.88273  15.6%     -    0s
+H    0     0                     261.3000000  223.88273  14.3%     -    0s
+H    0     0                     260.3900000  223.88273  14.0%     -    0s
+H    0     0                     260.1400000  223.88273  13.9%     -    0s
+     0     0  240.47153    0  208  260.14000  240.47153  7.56%     -    0s
+H    0     0                     259.6500000  240.47153  7.39%     -    0s
+H    0     0                     259.4700000  240.47153  7.32%     -    0s
+H    0     0                     259.2200000  240.47153  7.23%     -    0s
+H    0     0                     257.7200000  240.47153  6.69%     -    0s
+H    0     0                     257.3900000  240.47153  6.57%     -    0s
+H    0     0                     257.1400000  242.57315  5.66%     -    0s
+     0     0  242.57933    0  221  257.14000  242.57933  5.66%     -    0s
+     0     0  242.87143    0  218  257.14000  242.87143  5.55%     -    0s
+     0     0  242.88705    0  220  257.14000  242.88705  5.54%     -    0s
+     0     0  247.79771    0  195  257.14000  247.79771  3.63%     -    0s
+     0     0  248.50509    0  207  257.14000  248.50509  3.36%     -    0s
+     0     0  248.78686    0  199  257.14000  248.78686  3.25%     -    0s
+     0     0  248.85950    0  193  257.14000  248.85950  3.22%     -    0s
+     0     0  248.89621    0  194  257.14000  248.89621  3.21%     -    0s
+     0     0  248.90384    0  194  257.14000  248.90384  3.20%     -    0s
+H    0     0                     256.9900000  248.90384  3.15%     -    0s
+     0     0  250.09319    0  149  256.99000  250.09319  2.68%     -    0s
+     0     0  250.66879    0  160  256.99000  250.66879  2.46%     -    1s
+     0     0  250.82957    0  167  256.99000  250.82957  2.40%     -    1s
+     0     0  250.85660    0  162  256.99000  250.85660  2.39%     -    1s
+     0     0  251.28467    0  156  256.99000  251.28467  2.22%     -    1s
+     0     0  251.42579    0  133  256.99000  251.42579  2.17%     -    1s
+     0     0  251.42665    0  133  256.99000  251.42665  2.16%     -    1s
+     0     0  251.58958    0  127  256.99000  251.58958  2.10%     -    1s
+     0     0  251.63006    0  127  256.99000  251.63006  2.09%     -    1s
+     0     0  251.63171    0  125  256.99000  251.63171  2.09%     -    1s
+     0     0  251.80920    0  126  256.99000  251.80920  2.02%     -    1s
+     0     0  251.80920    0  126  256.99000  251.80920  2.02%     -    1s
+H    0     0                     256.1600000  251.81087  1.70%     -    2s
+     0     2  251.81087    0  126  256.16000  251.81087  1.70%     -    2s
+  2383  2260  253.78622   50  174  256.16000  252.20937  1.54%   3.9    5s
+H 2416  2167                     255.9100000  253.74579  0.85%   3.9    7s
+  2431  2177  255.69983  224  119  255.91000  253.92001  0.78%   3.8   10s
+  2485  2214  254.60297  170  122  255.91000  254.17560  0.68%   6.4   15s
+  3261  2521  254.72004   69  104  255.91000  254.28100  0.64%   9.2   20s
+ 14279  9139  255.19746   66   98  255.91000  254.59404  0.51%   6.1   25s
+ 28618 19468  254.91881   35  113  255.91000  254.69896  0.47%   5.8   30s
+ 29707 19471  255.23397   86  181  255.91000  254.70525  0.47%   5.7   35s
+ 29749 19499  255.36459  166  129  255.91000  254.70525  0.47%   5.7   40s
+ 29769 19512  254.75181   28  125  255.91000  254.70525  0.47%   5.7   45s
+ 29787 19524  255.73102  124  123  255.91000  254.70525  0.47%   5.7   50s
+ 29805 19536  255.42376   86  129  255.91000  254.70525  0.47%   5.7   55s
+ 31291 19858  255.43215   89   94  255.91000  254.70832  0.47%   6.2   60s
+ 44542 25122  255.75080   88   89  255.91000  255.12104  0.31%   6.0   65s
+ 58065 27408     cutoff   57       255.91000  255.23110  0.27%   6.0   70s
+ 71108 31147  255.61073  102   65  255.91000  255.30463  0.24%   5.9   75s
+ 83858 33485  255.51174   57  101  255.91000  255.34207  0.22%   6.0   80s
+ 97250 39080  255.59810   69   77  255.91000  255.37704  0.21%   5.9   85s
+ 109647 45293  255.86046   63   94  255.91000  255.40504  0.20%   6.0   90s
+ 122249 52565  255.58570   62   89  255.91000  255.42848  0.19%   5.9   95s
+ 135314 59484  255.88567  101   58  255.91000  255.44546  0.18%   5.9  100s
+ 147140 65094  255.57647   59   93  255.91000  255.46348  0.17%   5.9  105s
+ 159464 70831  255.58526   74   97  255.91000  255.48388  0.17%   5.9  110s
+ 170995 76335  255.82251   56   59  255.91000  255.49669  0.16%   5.9  115s
+ 182180 81019  255.84410   67   66  255.91000  255.51020  0.16%   5.9  120s
+ 193593 85629     cutoff   83       255.91000  255.52355  0.15%   5.9  125s
+ 204372 89489     cutoff   87       255.91000  255.53454  0.15%   5.9  130s
+ 215749 94471  255.86737   75   85  255.91000  255.54583  0.14%   5.9  135s
+ 226989 99170  255.75556   59   92  255.91000  255.55479  0.14%   5.9  140s
+ 239134 103817  255.84316   82   70  255.91000  255.56221  0.14%   5.9  145s
+ 251359 108473  255.73978   77   53  255.91000  255.57082  0.13%   5.9  150s
+ 262203 112031     cutoff   58       255.91000  255.57801  0.13%   5.9  155s
+ 272390 115709     cutoff   66       255.91000  255.58333  0.13%   6.0  160s
+ 282368 118709  255.84353  129   36  255.91000  255.59007  0.13%   6.0  165s
+ 291356 121223     cutoff   68       255.91000  255.59582  0.12%   6.0  170s
+ 300032 123505     cutoff   83       255.91000  255.60217  0.12%   6.0  175s
+ 308637 125384     cutoff   68       255.91000  255.60823  0.12%   6.0  180s
+ 316873 127388  255.87897   80   68  255.91000  255.61361  0.12%   6.0  185s
+ 325421 128766  255.78112   78   78  255.91000  255.61828  0.11%   6.1  190s
+ 334646 130187     cutoff   64       255.91000  255.62567  0.11%   6.1  195s
+ 342391 131141  255.80123   71   72  255.91000  255.63100  0.11%   6.1  203s
+ 345406 131310     cutoff   63       255.91000  255.63254  0.11%   6.1  205s
+ 355183 133745  255.88232   79   72  255.91000  255.63687  0.11%   6.1  210s
+ 364255 135233  255.75018   64   98  255.91000  255.64245  0.10%   6.1  215s
+ 373055 136068     cutoff   70       255.91000  255.64927  0.10%   6.2  220s
+ 381644 137088  255.89689  125   35  255.91000  255.65519  0.10%   6.2  225s
+ 390692 139037     cutoff   97       255.91000  255.66028  0.10%   6.2  230s
+ 400164 140200  255.80520   89   75  255.91000  255.66586  0.10%   6.2  235s
+ 409578 141449     cutoff   76       255.91000  255.67209  0.09%   6.2  240s
+ 419274 142458  255.85837   76   54  255.91000  255.67802  0.09%   6.2  245s
+ 428268 143056  255.89164   87   76  255.91000  255.68379  0.09%   6.3  250s
+ 437299 143938  255.86640  135   35  255.91000  255.68928  0.09%   6.3  255s
+ 445867 144716  255.79614   86   52  255.91000  255.69461  0.08%   6.3  260s
+ 455455 145657     cutoff   94       255.91000  255.70015  0.08%   6.3  265s
+ 464635 146497  255.76053   66   84  255.91000  255.70534  0.08%   6.3  270s
+ 473774 146189  255.86715  109   16  255.91000  255.71091  0.08%   6.3  275s
+ 483749 146837  255.82976  116   40  255.91000  255.71562  0.08%   6.4  280s
+ 491842 147907  255.88355  101   30  255.91000  255.72034  0.07%   6.4  285s
+ 501848 148387  255.86802   57   94  255.91000  255.72574  0.07%   6.4  290s
+ 510818 148187  255.88542  105   70  255.91000  255.73022  0.07%   6.4  295s
+ 520288 148612     cutoff   64       255.91000  255.73437  0.07%   6.4  300s
+ 529578 148801     cutoff  133       255.91000  255.73886  0.07%   6.4  305s
+ 539410 147537     cutoff  101       255.91000  255.74351  0.07%   6.5  310s
+ 549081 147445  255.88598  119   37  255.91000  255.74815  0.06%   6.5  315s
+ 556760 147748  255.80380  130   41  255.91000  255.75055  0.06%   6.5  320s
+ 565100 147734  255.85735   57   92  255.91000  255.75411  0.06%   6.5  325s
+ 574132 147577  255.89093  107   33  255.91000  255.75737  0.06%   6.6  330s
+ 583460 147259  255.87034   93   35  255.91000  255.76093  0.06%   6.6  335s
+ 592508 145490  255.83277   84   69  255.91000  255.76440  0.06%   6.6  340s
+ 601963 143288     cutoff   92       255.91000  255.76878  0.06%   6.6  345s
+ 611424 141591  255.84776   74   39  255.91000  255.77315  0.05%   6.7  350s
+ 620899 140100     cutoff   75       255.91000  255.77713  0.05%   6.7  355s
+ 629412 138669  255.89076  116   38  255.91000  255.78060  0.05%   6.7  360s
+ 638524 136479     cutoff  103       255.91000  255.78457  0.05%   6.7  365s
+ 647582 134759  255.86891  147   22  255.91000  255.78797  0.05%   6.7  370s
+ 656482 132777     cutoff  124       255.91000  255.79093  0.05%   6.8  375s
+ 665749 129936     cutoff  116       255.91000  255.79481  0.05%   6.8  380s
+ 673696 127853     cutoff  124       255.91000  255.79819  0.04%   6.8  385s
+ 683816 125600     cutoff   90       255.91000  255.80168  0.04%   6.8  390s
+ 691986 123107  255.88037  135   19  255.91000  255.80481  0.04%   6.8  395s
+ 700676 120008     cutoff   90       255.91000  255.80867  0.04%   6.8  400s
+ 709541 117332  255.85031  126   27  255.91000  255.81180  0.04%   6.9  405s
+ 717481 116189  255.87591   76   51  255.91000  255.81419  0.04%   6.9  410s
+ 725970 113966     cutoff   99       255.91000  255.81693  0.04%   6.9  415s
+ 734080 111237  255.89663   75   10  255.91000  255.81925  0.04%   6.9  420s
+ 742871 108377  255.86075   97   49  255.91000  255.82191  0.03%   6.9  425s
+ 751206 105206  255.87319  130    9  255.91000  255.82489  0.03%   6.9  430s
+ 759931 102516  255.87144  140   10  255.91000  255.82755  0.03%   6.9  435s
+ 768754 98352     cutoff  112       255.91000  255.83071  0.03%   7.0  440s
+ 776733 93662     cutoff   80       255.91000  255.83384  0.03%   7.0  445s
+ 785173 90779  255.85036   85   57  255.91000  255.83646  0.03%   7.0  450s
+ 793511 87099     cutoff   77       255.91000  255.83950  0.03%   7.0  455s
+ 802506 82773     cutoff  112       255.91000  255.84251  0.03%   7.0  460s
+ 811090 78453     cutoff   78       255.91000  255.84550  0.03%   7.0  465s
+ 819759 74483  255.86151  114   15  255.91000  255.84838  0.02%   7.0  470s
+ 829049 69334     cutoff   83       255.91000  255.85194  0.02%   7.1  475s
+ 837756 64526  255.89776  134   18  255.91000  255.85491  0.02%   7.1  480s
+ 847136 59123  255.87718   92   59  255.91000  255.85884  0.02%   7.1  485s
+ 855162 55527  255.86151  143   15  255.91000  255.86151  0.02%   7.1  490s
+ 863744 50431     cutoff   81       255.91000  255.86427  0.02%   7.1  495s
+ 873510 43201     cutoff  128       255.91000  255.86867  0.02%   7.1  500s
+ 880506 38871     cutoff  118       255.91000  255.87144  0.02%   7.1  505s
+ 889925 31562     cutoff  121       255.91000  255.87568  0.01%   7.1  510s
+ 899488 24922     cutoff  146       255.91000  255.87990  0.01%   7.1  515s
+ 908299 18718  255.88617   92   55  255.91000  255.88385  0.01%   7.1  520s
+ 917724 11801     cutoff   76       255.91000  255.88972  0.01%   7.1  525s
+ 926718  6253     cutoff   82       255.91000  255.89411  0.01%   7.1  530s
+ 933607  1953     cutoff   85       255.91000  255.89776  0.00%   7.1  535s
+
+Cutting planes:
+  Gomory: 29
+  MIR: 458
+  Mixing: 2
+  StrongCG: 42
+  Flow cover: 3
+  Zero half: 11
+
+Explored 937114 nodes (6620465 simplex iterations) in 536.78 seconds (239.73 work units)
+Thread count was 16 (of 16 available processors)
+
+Solution count 10: 255.91 256.16 256.16 ... 257.72
+
+Optimal solution found (tolerance 0.00e+00)
+Best objective 2.559100000000e+02, best bound 2.559100000000e+02, gap 0.0000%
+546.3s  RealObj=126.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5214        TotalObj=255.91
+546.4s Congratulations! The volume of SKUs loaded in each vehicle is equal or smaller than vehicle's capacity.
+====================================================================================================
+
+Set parameter OutputFlag to value 1
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+546.8s Start Solving! Day 2 / Now 2025-02-23 16:27:01.920850
+546.8s Constructing load patterns...
+546.8s  RealObj=0.0     No. Alpha=361   No. Beta=0      No. Gamma=0     No. Pattern=0   TotalObj=24290000.00
+547.9s  RealObj=33.2    No. Alpha=238   No. Beta=0      No. Gamma=0     No. Pattern=648 TotalObj=15850077.15
+550.1s  RealObj=90.9    No. Alpha=140   No. Beta=0      No. Gamma=0     No. Pattern=1173        TotalObj=9725206.89
+551.9s  RealObj=182.1   No. Alpha=73    No. Beta=0      No. Gamma=0     No. Pattern=1605        TotalObj=5030363.72
+552.9s  RealObj=170.8   No. Alpha=25    No. Beta=0      No. Gamma=0     No. Pattern=2065        TotalObj=1840364.50
+553.7s  RealObj=132.4   No. Alpha=2     No. Beta=0      No. Gamma=0     No. Pattern=2504        TotalObj=210278.98
+554.5s  RealObj=98.2    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3039        TotalObj=218.13
+555.4s  RealObj=95.3    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3612        TotalObj=213.65
+556.4s  RealObj=94.3    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4164        TotalObj=211.19
+557.4s  RealObj=93.3    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4740        TotalObj=209.49
+558.4s  RealObj=92.4    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5383        TotalObj=208.38
+558.4s Initializing Feasible Solution...
+558.5s Optimizing restricted master model...
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 6004 columns and 29843 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    2.0837629e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.083762906e+02
+558.5s  RealObj=92.4    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5383        TotalObj=208.38
+558.5s Set variables in the master model to integer type
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 6004 columns and 29843 nonzeros
+Model fingerprint: 0x096f51e8
+Variable types: 0 continuous, 6004 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+Found heuristic solution: objective 7.817600e+07
+Presolve removed 413 rows and 5936 columns
+Presolve time: 0.57s
+Presolved: 14 rows, 68 columns, 299 nonzeros
+Found heuristic solution: objective 252.6700000
+Variable types: 0 continuous, 68 integer (0 binary)
+
+Root relaxation: objective 2.470832e+02, 32 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  247.08318    0   13  252.67000  247.08318  2.21%     -    0s
+H    0     0                     250.9200000  247.08318  1.53%     -    0s
+H    0     0                     250.6700000  247.08318  1.43%     -    0s
+H    0     0                     250.0200000  247.08318  1.17%     -    0s
+H    0     0                     249.8400000  247.08318  1.10%     -    0s
+H    0     0                     248.9400000  247.08318  0.75%     -    0s
+H    0     0                     248.7600000  247.08318  0.67%     -    0s
+     0     0  248.13954    0   12  248.76000  248.13954  0.25%     -    0s
+     0     0  248.24249    0   13  248.76000  248.24249  0.21%     -    0s
+     0     0  248.30500    0   12  248.76000  248.30500  0.18%     -    0s
+     0     0  248.32451    0   12  248.76000  248.32451  0.18%     -    0s
+     0     0  248.33392    0   13  248.76000  248.33392  0.17%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 12
+  StrongCG: 3
+
+Explored 1 nodes (86 simplex iterations) in 0.63 seconds (0.13 work units)
+Thread count was 16 (of 16 available processors)
+
+Solution count 8: 248.76 248.94 249.84 ... 7.8176e+07
+
+Optimal solution found (tolerance 0.00e+00)
+Best objective 2.487600000000e+02, best bound 2.487600000000e+02, gap 0.0000%
+559.3s  RealObj=120.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5383        TotalObj=248.76
+559.3s Congratulations! The volume of SKUs loaded in each vehicle is equal or smaller than vehicle's capacity.
+====================================================================================================
+
+Set parameter OutputFlag to value 1
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+559.7s Start Solving! Day 3 / Now 2025-02-23 16:27:14.789606
+559.7s Constructing load patterns...
+559.7s  RealObj=0.0     No. Alpha=361   No. Beta=0      No. Gamma=0     No. Pattern=0   TotalObj=25370000.00
+560.7s  RealObj=86.5    No. Alpha=242   No. Beta=0      No. Gamma=0     No. Pattern=624 TotalObj=17255154.27
+562.4s  RealObj=174.7   No. Alpha=153   No. Beta=0      No. Gamma=0     No. Pattern=1087        TotalObj=10805335.28
+564.5s  RealObj=199.1   No. Alpha=89    No. Beta=0      No. Gamma=0     No. Pattern=1504        TotalObj=6040394.84
+565.8s  RealObj=269.3   No. Alpha=27    No. Beta=0      No. Gamma=0     No. Pattern=1941        TotalObj=1675473.51
+566.6s  RealObj=187.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=2389        TotalObj=367.47
+567.3s  RealObj=111.9   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=2864        TotalObj=240.16
+568.1s  RealObj=102.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3412        TotalObj=225.56
+568.9s  RealObj=100.5   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4001        TotalObj=222.60
+569.7s  RealObj=100.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4519        TotalObj=220.29
+570.6s  RealObj=98.8    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5005        TotalObj=219.03
+570.6s Initializing Feasible Solution...
+570.6s Optimizing restricted master model...
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 5678 columns and 26867 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    2.1902840e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.190284020e+02
+570.7s  RealObj=98.8    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5005        TotalObj=219.03
+570.7s Set variables in the master model to integer type
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 5678 columns and 26867 nonzeros
+Model fingerprint: 0x3e3c4777
+Variable types: 0 continuous, 5678 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+Found heuristic solution: objective 8.716617e+07
+Presolve removed 413 rows and 5630 columns
+Presolve time: 0.26s
+Presolved: 14 rows, 48 columns, 188 nonzeros
+Found heuristic solution: objective 284.8600000
+Variable types: 0 continuous, 48 integer (2 binary)
+Found heuristic solution: objective 268.1400000
+
+Root relaxation: objective 2.575823e+02, 20 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  257.58233    0   12  268.14000  257.58233  3.94%     -    0s
+H    0     0                     264.6600000  257.58233  2.67%     -    0s
+H    0     0                     261.0000000  257.58233  1.31%     -    0s
+H    0     0                     260.6500000  257.58233  1.18%     -    0s
+H    0     0                     260.3500000  257.58233  1.06%     -    0s
+H    0     0                     260.1700000  257.58233  0.99%     -    0s
+H    0     0                     259.3200000  257.58233  0.67%     -    0s
+     0     0  257.98960    0   11  259.32000  257.98960  0.51%     -    0s
+H    0     0                     258.5000000  257.98960  0.20%     -    0s
+H    0     0                     258.3200000  257.98960  0.13%     -    0s
+     0     0  258.10515    0   14  258.32000  258.10515  0.08%     -    0s
+     0     0  258.17120    0   15  258.32000  258.17120  0.06%     -    0s
+     0     0  258.22167    0   13  258.32000  258.22167  0.04%     -    0s
+     0     0  258.29727    0   12  258.32000  258.29727  0.01%     -    0s
+     0     0  258.29727    0   12  258.32000  258.29727  0.01%     -    0s
+
+Cutting planes:
+  Gomory: 2
+  MIR: 5
+  Zero half: 2
+  Mod-K: 1
+
+Explored 1 nodes (74 simplex iterations) in 0.28 seconds (0.05 work units)
+Thread count was 16 (of 16 available processors)
+
+Solution count 10: 258.32 258.5 259.32 ... 284.86
+
+Optimal solution found (tolerance 0.00e+00)
+Best objective 2.583200000000e+02, best bound 2.583200000000e+02, gap 0.0000%
+571.1s  RealObj=131.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5005        TotalObj=258.32
+571.1s Congratulations! The volume of SKUs loaded in each vehicle is equal or smaller than vehicle's capacity.
+====================================================================================================
+
+Set parameter OutputFlag to value 1
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+571.4s Start Solving! Day 4 / Now 2025-02-23 16:27:26.543886
+571.4s Constructing load patterns...
+571.4s  RealObj=0.0     No. Alpha=361   No. Beta=0      No. Gamma=0     No. Pattern=0   TotalObj=24790000.00
+572.5s  RealObj=45.8    No. Alpha=246   No. Beta=0      No. Gamma=0     No. Pattern=592 TotalObj=16830106.40
+574.4s  RealObj=101.8   No. Alpha=158   No. Beta=0      No. Gamma=0     No. Pattern=1075        TotalObj=10955229.75
+577.0s  RealObj=145.6   No. Alpha=92    No. Beta=0      No. Gamma=0     No. Pattern=1506        TotalObj=6335303.43
+578.4s  RealObj=243.6   No. Alpha=35    No. Beta=0      No. Gamma=0     No. Pattern=1952        TotalObj=2460441.64
+579.3s  RealObj=221.3   No. Alpha=3     No. Beta=0      No. Gamma=0     No. Pattern=2396        TotalObj=220403.93
+580.0s  RealObj=115.1   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=2909        TotalObj=241.74
+580.9s  RealObj=96.1    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3451        TotalObj=214.30
+581.9s  RealObj=95.6    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4032        TotalObj=213.31
+582.8s  RealObj=95.1    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4603        TotalObj=212.80
+583.8s  RealObj=94.4    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5204        TotalObj=211.49
+583.7s Initializing Feasible Solution...
+583.8s Optimizing restricted master model...
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 5929 columns and 28189 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    2.1149086e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.114908605e+02
+583.8s  RealObj=94.4    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5204        TotalObj=211.49
+583.8s Set variables in the master model to integer type
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 5929 columns and 28189 nonzeros
+Model fingerprint: 0x553627ac
+Variable types: 0 continuous, 5929 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+Found heuristic solution: objective 9.864125e+07
+Presolve removed 411 rows and 5882 columns
+Presolve time: 0.16s
+Presolved: 16 rows, 47 columns, 194 nonzeros
+Found heuristic solution: objective 250.3000000
+Variable types: 0 continuous, 47 integer (4 binary)
+Found heuristic solution: objective 248.2200000
+
+Root relaxation: objective 2.450268e+02, 35 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  245.02680    0   14  248.22000  245.02680  1.29%     -    0s
+H    0     0                     246.6400000  245.02680  0.65%     -    0s
+H    0     0                     246.5700000  245.02680  0.63%     -    0s
+H    0     0                     246.3900000  245.02680  0.55%     -    0s
+     0     0  245.78304    0   18  246.39000  245.78304  0.25%     -    0s
+H    0     0                     246.1400000  245.78304  0.15%     -    0s
+     0     0  246.14000    0   19  246.14000  246.14000  0.00%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 4
+  StrongCG: 1
+
+Explored 1 nodes (61 simplex iterations) in 0.18 seconds (0.03 work units)
+Thread count was 16 (of 16 available processors)
+
+Solution count 7: 246.14 246.39 246.57 ... 9.86413e+07
+
+Optimal solution found (tolerance 0.00e+00)
+Best objective 2.461400000000e+02, best bound 2.461400000000e+02, gap 0.0000%
+584.1s  RealObj=119.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5204        TotalObj=246.14
+584.2s Congratulations! The volume of SKUs loaded in each vehicle is equal or smaller than vehicle's capacity.
+====================================================================================================
+
+Set parameter OutputFlag to value 1
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+584.5s Start Solving! Day 5 / Now 2025-02-23 16:27:39.627602
+584.5s Constructing load patterns...
+584.5s  RealObj=0.0     No. Alpha=361   No. Beta=0      No. Gamma=0     No. Pattern=0   TotalObj=25530000.00
+585.7s  RealObj=51.8    No. Alpha=238   No. Beta=0      No. Gamma=0     No. Pattern=643 TotalObj=17090117.27
+588.1s  RealObj=126.6   No. Alpha=153   No. Beta=0      No. Gamma=0     No. Pattern=1125        TotalObj=11050288.42
+590.4s  RealObj=242.1   No. Alpha=89    No. Beta=0      No. Gamma=0     No. Pattern=1524        TotalObj=6070517.92
+591.8s  RealObj=244.6   No. Alpha=35    No. Beta=0      No. Gamma=0     No. Pattern=1973        TotalObj=2590498.15
+592.6s  RealObj=242.7   No. Alpha=5     No. Beta=0      No. Gamma=0     No. Pattern=2373        TotalObj=345480.18
+593.4s  RealObj=140.1   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=2843        TotalObj=288.66
+594.3s  RealObj=102.8   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3382        TotalObj=229.01
+595.2s  RealObj=99.0    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3932        TotalObj=220.64
+596.0s  RealObj=97.8    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4535        TotalObj=218.86
+596.9s  RealObj=97.2    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4990        TotalObj=217.91
+597.8s  RealObj=96.7    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5464        TotalObj=217.00
+597.8s Initializing Feasible Solution...
+597.8s Optimizing restricted master model...
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 6241 columns and 29453 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    2.1699834e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.169983352e+02
+597.9s  RealObj=96.7    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5464        TotalObj=217.00
+597.9s Set variables in the master model to integer type
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 6241 columns and 29453 nonzeros
+Model fingerprint: 0xda016d5c
+Variable types: 0 continuous, 6241 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+Found heuristic solution: objective 6.192606e+07
+Presolve removed 413 rows and 6186 columns
+Presolve time: 0.36s
+Presolved: 14 rows, 55 columns, 222 nonzeros
+Found heuristic solution: objective 256.2300000
+Variable types: 0 continuous, 55 integer (0 binary)
+
+Root relaxation: objective 2.517525e+02, 29 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  251.75247    0   14  256.23000  251.75247  1.75%     -    0s
+H    0     0                     256.0800000  251.75247  1.69%     -    0s
+H    0     0                     255.6500000  251.75247  1.52%     -    0s
+H    0     0                     254.9000000  251.75247  1.23%     -    0s
+H    0     0                     254.6500000  251.75247  1.14%     -    0s
+H    0     0                     254.5700000  251.75247  1.11%     -    0s
+H    0     0                     254.4000000  251.75247  1.04%     -    0s
+     0     0  252.23890    0    9  254.40000  252.23890  0.85%     -    0s
+H    0     0                     254.0700000  252.23890  0.72%     -    0s
+H    0     0                     253.7500000  252.23890  0.60%     -    0s
+H    0     0                     253.5700000  252.23890  0.52%     -    0s
+H    0     0                     253.5000000  252.35710  0.45%     -    0s
+H    0     0                     253.3200000  252.35710  0.38%     -    0s
+     0     0  252.35710    0   12  253.32000  252.35710  0.38%     -    0s
+     0     0  252.35869    0   12  253.32000  252.35869  0.38%     -    0s
+     0     0  252.36001    0   12  253.32000  252.36001  0.38%     -    0s
+     0     0  252.60412    0   17  253.32000  252.60412  0.28%     -    0s
+     0     0  252.63193    0   18  253.32000  252.63193  0.27%     -    0s
+     0     0  252.63578    0   20  253.32000  252.63578  0.27%     -    0s
+     0     0  252.63595    0   20  253.32000  252.63595  0.27%     -    0s
+     0     0  252.72072    0   16  253.32000  252.72072  0.24%     -    0s
+     0     0  252.73520    0   14  253.32000  252.73520  0.23%     -    0s
+     0     0  252.73746    0   18  253.32000  252.73746  0.23%     -    0s
+     0     0  252.73833    0   19  253.32000  252.73833  0.23%     -    0s
+     0     0  252.82894    0   18  253.32000  252.82894  0.19%     -    0s
+     0     0  252.89870    0   20  253.32000  252.89870  0.17%     -    0s
+     0     0  252.91908    0   21  253.32000  252.91908  0.16%     -    0s
+     0     0  252.94296    0   21  253.32000  252.94296  0.15%     -    0s
+     0     0  252.95436    0   22  253.32000  252.95436  0.14%     -    0s
+     0     0  253.05750    0   22  253.32000  253.05750  0.10%     -    0s
+     0     2  253.06276    0   22  253.32000  253.06276  0.10%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 16
+  StrongCG: 2
+
+Explored 33 nodes (428 simplex iterations) in 0.44 seconds (0.09 work units)
+Thread count was 16 (of 16 available processors)
+
+Solution count 10: 253.32 253.5 253.57 ... 255.65
+
+Optimal solution found (tolerance 0.00e+00)
+Best objective 2.533200000000e+02, best bound 2.533200000000e+02, gap 0.0000%
+598.4s  RealObj=125.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5464        TotalObj=253.32
+598.5s Congratulations! The volume of SKUs loaded in each vehicle is equal or smaller than vehicle's capacity.
+====================================================================================================
+
+Set parameter OutputFlag to value 1
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+598.9s Start Solving! Day 6 / Now 2025-02-23 16:27:53.989889
+598.9s Constructing load patterns...
+598.9s  RealObj=0.0     No. Alpha=361   No. Beta=0      No. Gamma=0     No. Pattern=0   TotalObj=25130000.00
+600.5s  RealObj=44.7    No. Alpha=227   No. Beta=0      No. Gamma=0     No. Pattern=686 TotalObj=15960100.76
+602.8s  RealObj=76.9    No. Alpha=143   No. Beta=0      No. Gamma=0     No. Pattern=1184        TotalObj=10350172.99
+604.7s  RealObj=196.6   No. Alpha=76    No. Beta=0      No. Gamma=0     No. Pattern=1643        TotalObj=5560323.82
+605.8s  RealObj=289.6   No. Alpha=28    No. Beta=0      No. Gamma=0     No. Pattern=2095        TotalObj=1765466.41
+606.6s  RealObj=175.4   No. Alpha=2     No. Beta=0      No. Gamma=0     No. Pattern=2612        TotalObj=145350.64
+607.4s  RealObj=106.9   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3119        TotalObj=236.19
+608.2s  RealObj=101.3   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3646        TotalObj=223.44
+609.1s  RealObj=99.2    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4223        TotalObj=220.07
+610.0s  RealObj=98.3    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4855        TotalObj=217.82
+611.0s  RealObj=96.3    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5479        TotalObj=215.51
+611.0s Initializing Feasible Solution...
+611.0s Optimizing restricted master model...
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 6308 columns and 30789 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    2.1551192e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.155119191e+02
+611.1s  RealObj=96.3    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5479        TotalObj=215.51
+611.1s Set variables in the master model to integer type
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 6308 columns and 30789 nonzeros
+Model fingerprint: 0x65c4a7d6
+Variable types: 0 continuous, 6308 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+Found heuristic solution: objective 9.539126e+07
+Presolve removed 413 rows and 6251 columns
+Presolve time: 0.63s
+Presolved: 14 rows, 57 columns, 302 nonzeros
+Found heuristic solution: objective 264.0100000
+Variable types: 0 continuous, 57 integer (3 binary)
+
+Root relaxation: objective 2.599407e+02, 22 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  259.94066    0   13  264.01000  259.94066  1.54%     -    0s
+H    0     0                     263.0900000  259.94066  1.20%     -    0s
+H    0     0                     262.7600000  259.94066  1.07%     -    0s
+H    0     0                     262.0100000  259.94066  0.79%     -    0s
+     0     0  260.24662    0   14  262.01000  260.24662  0.67%     -    0s
+     0     0  260.67830    0   15  262.01000  260.67830  0.51%     -    0s
+H    0     0                     261.9300000  260.67830  0.48%     -    0s
+     0     0  260.90600    0   17  261.93000  260.90600  0.39%     -    0s
+H    0     0                     261.7600000  260.90600  0.33%     -    0s
+     0     0  261.24827    0   17  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   18  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   17  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   19  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   16  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   17  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   17  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   17  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   19  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   15  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   16  261.76000  261.24827  0.20%     -    0s
+     0     0  261.24827    0   19  261.76000  261.24827  0.20%     -    0s
+     0     2  261.24827    0   19  261.76000  261.24827  0.20%     -    0s
+
+Cutting planes:
+  Gomory: 2
+  MIR: 13
+  StrongCG: 3
+  Zero half: 1
+
+Explored 195 nodes (1632 simplex iterations) in 0.75 seconds (0.18 work units)
+Thread count was 16 (of 16 available processors)
+
+Solution count 7: 261.76 261.93 262.01 ... 9.53913e+07
+
+Optimal solution found (tolerance 0.00e+00)
+Best objective 2.617600000000e+02, best bound 2.617600000000e+02, gap 0.0000%
+611.9s  RealObj=129.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5479        TotalObj=261.76
+612.0s Congratulations! The volume of SKUs loaded in each vehicle is equal or smaller than vehicle's capacity.
+====================================================================================================
+
+Set parameter OutputFlag to value 1
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+612.4s Start Solving! Day 7 / Now 2025-02-23 16:28:07.491894
+612.4s Constructing load patterns...
+612.4s  RealObj=0.0     No. Alpha=361   No. Beta=0      No. Gamma=0     No. Pattern=0   TotalObj=26150000.00
+613.5s  RealObj=43.0    No. Alpha=246   No. Beta=0      No. Gamma=0     No. Pattern=606 TotalObj=17900098.12
+615.4s  RealObj=95.8    No. Alpha=159   No. Beta=0      No. Gamma=0     No. Pattern=1060        TotalObj=11595219.99
+617.3s  RealObj=176.8   No. Alpha=92    No. Beta=0      No. Gamma=0     No. Pattern=1480        TotalObj=6555341.63
+618.4s  RealObj=283.6   No. Alpha=33    No. Beta=0      No. Gamma=0     No. Pattern=1928        TotalObj=2410522.97
+619.3s  RealObj=293.2   No. Alpha=3     No. Beta=0      No. Gamma=0     No. Pattern=2401        TotalObj=165526.19
+620.0s  RealObj=135.9   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=2892        TotalObj=271.44
+620.8s  RealObj=104.8   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=3436        TotalObj=228.96
+621.7s  RealObj=102.3   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4015        TotalObj=226.43
+622.6s  RealObj=101.2   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=4591        TotalObj=224.71
+623.3s  RealObj=99.7    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5024        TotalObj=222.46
+623.3s Initializing Feasible Solution...
+623.4s Optimizing restricted master model...
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 5905 columns and 26973 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    2.2245986e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.224598555e+02
+623.4s  RealObj=99.7    No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5024        TotalObj=222.46
+623.4s Set variables in the master model to integer type
+Set parameter MIPGap to value 0
+Set parameter TimeLimit to value 900
+Set parameter OutputFlag to value 1
+Gurobi Optimizer version 12.0.1 build v12.0.1rc0 (win64 - Windows 11.0 (26100.2))
+
+CPU model: AMD Ryzen 7 5700U with Radeon Graphics, instruction set [SSE2|AVX|AVX2]
+Thread count: 8 physical cores, 16 logical processors, using up to 16 threads
+
+Non-default parameters:
+TimeLimit  900
+MIPGap  0
+
+Optimize a model with 427 rows, 5905 columns and 26973 nonzeros
+Model fingerprint: 0x86a5b421
+Variable types: 0 continuous, 5905 integer (0 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 3e+01]
+  Objective range  [1e+00, 5e+03]
+  Bounds range     [1e+02, 6e+02]
+  RHS range        [1e+00, 5e+04]
+Found heuristic solution: objective 7.974106e+07
+Presolve removed 413 rows and 5847 columns
+Presolve time: 0.50s
+Presolved: 14 rows, 58 columns, 219 nonzeros
+Found heuristic solution: objective 292.0800000
+Variable types: 0 continuous, 58 integer (1 binary)
+Found heuristic solution: objective 275.7700000
+
+Root relaxation: objective 2.645852e+02, 30 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  264.58523    0   11  275.77000  264.58523  4.06%     -    0s
+H    0     0                     274.5100000  264.58523  3.62%     -    0s
+H    0     0                     271.7700000  264.58523  2.64%     -    0s
+H    0     0                     266.7700000  264.58523  0.82%     -    0s
+H    0     0                     266.5200000  264.58523  0.73%     -    0s
+H    0     0                     266.4400000  264.58523  0.70%     -    0s
+H    0     0                     266.1900000  264.58523  0.60%     -    0s
+     0     0  265.02177    0   15  266.19000  265.02177  0.44%     -    0s
+     0     0  265.05441    0   15  266.19000  265.05441  0.43%     -    0s
+     0     0  265.05467    0   13  266.19000  265.05467  0.43%     -    0s
+     0     0  265.06052    0   14  266.19000  265.06052  0.42%     -    0s
+H    0     0                     266.0200000  265.20824  0.31%     -    0s
+     0     0  265.26688    0   15  266.02000  265.26688  0.28%     -    0s
+     0     0  265.60077    0   16  266.02000  265.60077  0.16%     -    0s
+     0     0  265.60077    0   14  266.02000  265.60077  0.16%     -    0s
+     0     0  265.60077    0   14  266.02000  265.60077  0.16%     -    0s
+     0     0  265.72775    0   17  266.02000  265.72775  0.11%     -    0s
+     0     2  265.73391    0   17  266.02000  265.73391  0.11%     -    0s
+
+Cutting planes:
+  Gomory: 1
+  MIR: 7
+  StrongCG: 2
+
+Explored 20 nodes (227 simplex iterations) in 0.57 seconds (0.12 work units)
+Thread count was 16 (of 16 available processors)
+
+Solution count 10: 266.02 266.19 266.44 ... 7.97411e+07
+
+Optimal solution found (tolerance 0.00e+00)
+Best objective 2.660200000000e+02, best bound 2.660200000000e+02, gap 0.0000%
+624.1s  RealObj=132.0   No. Alpha=0     No. Beta=0      No. Gamma=0     No. Pattern=5024        TotalObj=266.02
+624.2s Congratulations! The volume of SKUs loaded in each vehicle is equal or smaller than vehicle's capacity.
+====================================================================================================
+
+***************************************************************************
+        The Vehicle Loading Plan is Done! 2025-02-23 16:28:19.369767
+***************************************************************************
+(base) PS D:\Gurobi_code\Problem2\column-generation>

@@ -1,0 +1,291 @@
+import copy
+import time
+import random
+import numpy.random as rnd
+import numpy as np
+from dataclasses import dataclass, field
+from typing import Dict, List, Tuple, Set, Callable
+from InputDataALNS import DataALNS
+from vehicle import Vehicle
+from optutility import LogPrinter
+
+log_printer = LogPrinter(time.time())
+
+@dataclass
+class SolutionState:
+    data: DataALNS
+    vehicles: List[Vehicle] = field(default_factory=list)
+    s_ikt: Dict[Tuple[str, str, int], int] = field(default_factory=dict)
+    s_indices: Set[Tuple[str, str, int]] = field(default_factory=set)
+    history: Dict[str, float] = field(default_factory=dict)  # 记录搜索历史
+
+    def __post_init__(self):
+        self.vehicles = []
+        self.s_ikt = {}
+        self.s_indices = self.construct_indices()
+        # 对s_ikt进行初始化, s_ik0表示期初库存
+        for (plant, sku_id, day), inv in self.data.historical_s_ikt.items():
+            if day == 0:
+                self.s_ikt[plant, sku_id, day] = inv
+        self.history = {
+            'best_obj': float('inf'),
+            'iterations': 0,
+            'time_elapsed': 0,
+            'operator_weights': {}  # 用于自适应权重
+        }
+    
+    def validate(self) -> bool:
+        """验证解的一致性"""
+        # 检查库存计算是否正确
+        self.compute_inventory()
+        
+        # 检查是否有负库存
+        has_negative = any(inv < 0 for inv in self.s_ikt.values())
+        
+        # 检查车辆容量是否超限
+        veh_overload = False
+        for veh in self.vehicles:
+            if self.compute_veh_load(veh) > self.data.veh_type_cap[veh.type]:
+                veh_overload = True
+                break
+                
+        return not (has_negative or veh_overload)
+
+    def objective(self):
+        scale_factor = 1e-3
+        
+        self.compute_inventory()
+        
+        total_cost = sum(self.data.veh_type_cap[veh.type] for veh in self.vehicles)
+        
+        total_cost = self.punish_non_fulfill_demand(total_cost)
+        
+        total_cost = self.punish_exceeded_inventory_limit(total_cost)
+        
+        total_cost = self.punish_deficient_veh_min_load(total_cost)
+        
+        total_cost = self.punish_negative_inventory(total_cost)
+        
+        return total_cost * scale_factor
+    
+    def punish_deficient_veh_min_load(self, obj: float):
+        """检查所有车辆是否满足最小起运量"""
+        for veh in self.vehicles:
+            total_volume = self.compute_veh_load(veh)
+            min_load = self.data.veh_type_min_load[veh.type]
+            if total_volume < min_load:
+                obj += self.data.param_pun_factor3 * (min_load - total_volume)
+        return obj
+
+    # 其他方法保持不变...
+
+class AdaptiveOperator:
+    """自适应算子选择类"""
+    def __init__(self, operators: List[Tuple[Callable, str]], weights: List[float] = None):
+        self.operators = operators  # 算子列表
+        self.weights = weights if weights else [1.0] * len(operators)  # 初始权重
+        self.scores = [0.0] * len(operators)  # 算子得分
+        self.calls = [0] * len(operators)  # 调用次数
+        
+    def select_operator(self, rng):
+        """基于权重选择算子"""
+        total_weight = sum(self.weights)
+        probs = [w/total_weight for w in self.weights]
+        idx = rng.choice(len(self.operators), p=probs)
+        self.calls[idx] += 1
+        return idx, self.operators[idx][0]
+    
+    def update_weights(self, idx, obj_before, obj_after, reaction_factor=0.1):
+        """更新算子权重"""
+        improvement = max(0, obj_before - obj_after)  # 只记录正向改进
+        self.scores[idx] += improvement
+        
+        # 动态调整权重
+        if sum(self.calls) % 100 == 0:  # 每100次调用更新一次权重
+            for i in range(len(self.weights)):
+                if self.calls[i] > 0:
+                    avg_score = self.scores[i] / self.calls[i]
+                    self.weights[i] = (1 - reaction_factor) * self.weights[i] + reaction_factor * avg_score
+                    
+            # 重置计数
+            self.scores = [0.0] * len(self.operators)
+            self.calls = [0] * len(self.operators)
+
+def alns_search(state: SolutionState, rng, max_iterations=1000, max_time=300):
+    """自适应大规模邻域搜索"""
+    # 初始化自适应算子
+    destroy_operators = [
+        (random_removal, "随机移除"),
+        (worst_removal, "最差移除"),
+        (infeasible_removal, "不可行移除"),
+        (demand_removal, "需求移除")
+    ]
+    
+    repair_operators = [
+        (greedy_repair, "贪心修复"),
+        (inventory_balance_repair, "库存平衡修复"),
+        (urgency_repair, "紧急度修复"),
+        (infeasible_repair, "不可行解修复")
+    ]
+    
+    destroy_selector = AdaptiveOperator(destroy_operators)
+    repair_selector = AdaptiveOperator(repair_operators)
+    
+    # 初始化
+    current = initial_solution(state, rng)
+    best = current.copy()
+    current_obj = current.objective()
+    best_obj = current_obj
+    
+    start_time = time.time()
+    temp = 100.0  # 初始温度
+    cooling_rate = 0.99  # 冷却率
+    
+    for it in range(max_iterations):
+        if time.time() - start_time > max_time:
+            break
+            
+        # 选择破坏算子
+        d_idx, destroy = destroy_selector.select_operator(rng)
+        
+        # 选择修复算子
+        r_idx, repair = repair_selector.select_operator(rng)
+        
+        # 应用算子
+        temp_sol = destroy(current, rng)
+        candidate = repair(temp_sol, rng)
+        
+        # 评估解
+        candidate_obj = candidate.objective()
+        
+        # 模拟退火接受准则
+        if candidate_obj < current_obj or rng.random() < np.exp((current_obj - candidate_obj) / temp):
+            current = candidate
+            current_obj = candidate_obj
+            
+            # 更新最优解
+            if current_obj < best_obj:
+                best = current.copy()
+                best_obj = current_obj
+                log_printer.print_log(f"New best: {best_obj} at iteration {it}")
+        
+        # 更新算子权重
+        destroy_selector.update_weights(d_idx, current_obj, candidate_obj)
+        repair_selector.update_weights(r_idx, current_obj, candidate_obj)
+        
+        # 降温
+        temp *= cooling_rate
+    
+    return best, best_obj
+
+# 实现Shaw移除算子
+def shaw_removal(current: SolutionState, rng: rnd.Generator):
+    """Shaw移除算子：移除相关联的车辆"""
+    state = current.copy()
+    if len(state.vehicles) <= 1:
+        return state
+        
+    # 随机选择一个种子车辆
+    seed_idx = rng.integers(0, len(state.vehicles))
+    seed_veh = state.vehicles[seed_idx]
+    
+    # 计算其他车辆与种子车辆的相关性
+    relatedness = []
+    for i, veh in enumerate(state.vehicles):
+        if i == seed_idx:
+            continue
+            
+        # 计算相关性（相同生产基地或经销商、相同日期等）
+        score = 0
+        if veh.fact_id == seed_veh.fact_id:
+            score += 3
+        if veh.dealer_id == seed_veh.dealer_id:
+            score += 2
+        if veh.day == seed_veh.day:
+            score += 1
+            
+        relatedness.append((i, score))
+    
+    # 按相关性排序
+    relatedness.sort(key=lambda x: x[1], reverse=True)
+    
+    # 移除最相关的q个车辆
+    num_remove = min(int(len(state.vehicles) * 0.3), len(relatedness))
+    remove_indices = [idx for idx, _ in relatedness[:num_remove]]
+    remove_indices.append(seed_idx)  # 也移除种子车辆
+    
+    # 按索引从大到小排序，以便从后向前移除
+    remove_indices.sort(reverse=True)
+    
+    for idx in remove_indices:
+        state.vehicles.pop(idx)
+    
+    return state
+
+# 路径移除算子
+def path_removal(current: SolutionState, rng: rnd.Generator):
+    """路径移除算子：移除特定路径上的车辆"""
+    state = current.copy()
+    
+    # 随机选择一条路径（工厂-经销商对）
+    paths = set((veh.fact_id, veh.dealer_id) for veh in state.vehicles)
+    if not paths:
+        return state
+        
+    target_path = rng.choice(list(paths))
+    
+    # 找出该路径上的所有车辆
+    path_vehicles = []
+    for i, veh in enumerate(state.vehicles):
+        if (veh.fact_id, veh.dealer_id) == target_path:
+            path_vehicles.append(i)
+    
+    # 随机移除该路径上的一部分车辆
+    if path_vehicles:
+        num_remove = max(1, len(path_vehicles) // 2)
+        remove_indices = sorted(rng.choice(path_vehicles, num_remove, replace=False), reverse=True)
+        
+        for idx in remove_indices:
+            state.vehicles.pop(idx)
+    
+    return state
+
+# 局部搜索修复
+def local_search_repair(partial: SolutionState, rng: rnd.Generator):
+    """使用局部搜索改进解"""
+    state = greedy_repair(partial, rng)  # 先使用贪心修复获得可行解
+    
+    # 局部搜索操作：尝试替换车型以减少成本
+    improved = True
+    while improved:
+        improved = False
+        for i, veh in enumerate(state.vehicles):
+            # 获取当前装载量
+            current_load = state.compute_veh_load(veh)
+            
+            # 尝试更小的车型
+            for veh_type in state.data.all_veh_types:
+                # 如果新车型容量足够且成本更低
+                if (state.data.veh_type_cap[veh_type] >= current_load and 
+                    current_load >= state.data.veh_type_min_load[veh_type] and
+                    state.data.veh_type_cap[veh_type] < state.data.veh_type_cap[veh.type]):
+                    
+                    # 创建新车辆并复制货物
+                    new_veh = Vehicle(veh.fact_id, veh.dealer_id, veh_type, veh.day, state.data)
+                    new_veh.cargo = veh.cargo.copy()
+                    
+                    # 临时替换并评估
+                    old_veh = state.vehicles[i]
+                    state.vehicles[i] = new_veh
+                    
+                    new_obj = state.objective()
+                    old_obj = float('inf')
+                    
+                    # 如果改进，接受变更
+                    if new_obj < old_obj:
+                        improved = True
+                    else:
+                        # 还原变更
+                        state.vehicles[i] = old_veh
+    
+    return state
