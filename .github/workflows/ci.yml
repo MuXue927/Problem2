@@ -45,6 +45,15 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
 
+      - name: Install local ALNS dependency (if present)
+        run: |
+          # prefer installing the local ALNS copy in the repo; fallback to PyPI
+          if [ -d "ALNS" ]; then
+            pip install -e ALNS || pip install alns
+          else
+            pip install alns
+          fi
+
       - name: Install project in editable mode (no deps)
         run: pip install -e . --no-deps
 
