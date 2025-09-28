@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+          if [ -f requirements.txt ] && [ ! -f requirements-dev.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run numba warm-up (best-effort)
+        run: |
+          python -u scripts/numba_warmup.py || echo "numba warmup failed or not available; continuing"
+
+      - name: Run tests
+        run: |
+          pytest -q
+
+      - name: Run quick benchmarks (best-effort)
+        run: |
+          # run lightweight benchmarks and save outputs as files
+          python -u scripts/benchmark_inventory.py || echo "benchmark_inventory failed"
+          python -u scripts/benchmark_validate.py || echo "benchmark_validate failed"
+          python -u scripts/benchmark_real_datasets.py || echo "benchmark_real_datasets failed"
+
+      - name: Upload benchmark artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmarks
+          path: |
+            benchmark_results.txt
+            benchmark_validate_results.txt
+            real_benchmark_results.txt

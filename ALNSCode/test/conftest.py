@@ -1,5 +1,5 @@
 import pytest
-from ALNSCode.alns_config import ALNSConfig
+from ALNSCode.alns_config import default_config as ALNSConfig
 
 
 @pytest.fixture

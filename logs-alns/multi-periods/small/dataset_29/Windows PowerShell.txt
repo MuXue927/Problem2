@@ -1,0 +1,2065 @@
+(Problem2) PS D:\Gurobi_code\Problem2\ALNSCode> python main.py
+0.0s 开始优化流程! / 2025-09-23 01:36:29.362817
+0.0s Step 1: 加载数据...
+0.0s Loading Data...
+0.0s Data loading elapsed time: 0.03s
+0.2s Step 1耗时: 0.19s
+0.2s Step 2: 创建初始解...
+0.2s Initializing the solution...
+1.5s Initial Solution Objective: 5370.68
+1.5s Vehicles Used in Initial Solution: 318
+1.5s Initial Solution Cost: 375.24
+1.5s Step 2耗时: 1.33s
+1.5s Step 3: 设置ALNS算法...
+1.5s 注册destroy算子...
+1.5s 所有destroy算子注册完成
+1.5s 注册repair算子...
+1.5s 所有repair算子注册完成
+1.5s Step 3耗时: 0.00s
+1.5s Step 4: 配置算子选择机制...
+1.5s Step 4耗时: 0.00s
+1.5s Step 5: 配置接受准则...
+1.5s Step 5耗时: 0.00s
+1.5s Step 6: 配置停止准则...
+1.5s 组合停止准则配置: 最大300次迭代 或 最大900秒运行时间
+1.5s Step 6耗时: 0.00s
+1.5s Step 7: 设置追踪器和回调函数...
+1.5s Step 7耗时: 0.00s
+1.5s Step 8: 运行ALNS算法...
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0086s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1212s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0069s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0005s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0085s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1119s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0694s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 21 个未满足需求
+[OPLOG] 批次 1/2 处理成功
+[OPLOG] 批次 2/2 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0591s
+2.0s Found feasible solution with cost: 374.88
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0095s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2931s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0127s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2418s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0084s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 正在构建特征和标签数据 ...
+[OPLOG] tracker中无数据, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: local_search_repair
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5955s
+[OPLOG] local_search_repair: 1.8003s
+构建训练数据: 特征长度 1, 标签长度 1, 目标函数改进 0.0000
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0257s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0333s
+4.7s Found feasible solution with cost: 372.52
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0142s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0049s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0280s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.1422s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0233s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0299s
+6.7s Iteration 1: New best feasible solution found!
+6.7s Objective: 5199.27, Gap: 0.00%, Time: 3.64s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0117s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.6110s
+[OPLOG] local_search_repair: 1.7968s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0159s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2141s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0135s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 1 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: local_search_repair
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.6262s
+[OPLOG] local_search_repair: 1.8092s
+[OPLOG] 计算的实际特征: [61.36486486486486, 1.6547254150702424, 2.0, 59.255319148936174, 0.7556730871410107]
+[OPLOG] 已保存实际训练数据: 特征值长度=2, 标签长度=2, 改进=0.0000
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0163s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0005s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0147s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 2 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: local_search_repair
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8919s
+[OPLOG] local_search_repair: 1.3108s
+[OPLOG] 计算的实际特征: [77.20689655172414, 2.081446111869031, 2.0, 44.925, 0.6932561986823274]
+[OPLOG] 已保存实际训练数据: 特征值长度=3, 标签长度=3, 改进=0.0000
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0159s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0264s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0269s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 3 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: urgency_repair
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0717s
+[OPLOG] 计算的实际特征: [59.5, 1.9924369747899162, 2.0, 47.22222222222222, 0.6921368700390348]
+[OPLOG] 已保存实际训练数据: 特征值长度=4, 标签长度=4, 改进=0.0000
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0164s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 4 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: smart_batch_repair
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 64 个未满足需求
+[OPLOG] 批次 1/5 处理成功
+[OPLOG] 批次 2/5 处理成功
+[OPLOG] 批次 3/5 处理成功
+[OPLOG] 批次 4/5 处理成功
+[OPLOG] 批次 5/5 处理成功
+[OPLOG] 迭代 2: 剩余 1 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2953s
+[OPLOG] 已保存实际训练数据: 特征值长度=5, 标签长度=5, 改进=1000000.0000
+11.4s Found feasible solution with cost: 366.48
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0162s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1654s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0126s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0004s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0165s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0036s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0154s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9315s
+[OPLOG] local_search_repair: 1.2564s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0161s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0043s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0322s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.5728s
+[OPLOG] local_search_repair: 1.0190s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0184s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2649s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0144s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0018s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0167s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2449s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0276s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0681s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0185s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 25 个未满足需求
+[OPLOG] 批次 1/2 处理成功
+[OPLOG] 批次 2/2 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.1328s
+15.3s Found feasible solution with cost: 363.32
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0170s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2849s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0165s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 52 个未满足需求
+[OPLOG] 批次 1/4 处理成功
+[OPLOG] 批次 2/4 处理成功
+[OPLOG] 批次 3/4 处理成功
+[OPLOG] 批次 4/4 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2263s
+16.0s Found feasible solution with cost: 354.26
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0317s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 19 个未满足需求
+[OPLOG] 批次 1/2 处理成功
+[OPLOG] 批次 2/2 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0988s
+17.8s Iteration 3: New best feasible solution found!
+17.8s Objective: 3801.85, Gap: 0.00%, Time: 14.69s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0328s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2419s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0212s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 5 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: urgency_repair
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2135s
+[OPLOG] 计算的实际特征: [57.666666666666664, 1.2644736842105262, 2.0, 48.095238095238095, 0.7308272024146387]
+[OPLOG] 已保存实际训练数据: 特征值长度=6, 标签长度=6, 改进=0.0000
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0204s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0170s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0209s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0010s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0322s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2442s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0306s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2269s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0201s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0045s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0161s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.4054s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0194s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4273s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0212s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2846s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0196s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.1149s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0331s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2432s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0188s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2816s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0201s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0038s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0192s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 6 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: inventory_balance_repair
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2391s
+[OPLOG] 计算的实际特征: [89.9090909090909, 1.4360714285714284, 2.0, 71.56410256410257, 0.8082755642772622]
+[OPLOG] 已保存实际训练数据: 特征值长度=7, 标签长度=7, 改进=0.0000
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0227s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8842s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0197s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1812s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0201s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.3053s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0193s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.0834s
+[OPLOG] local_search_repair: 1.4423s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0189s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 7 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: smart_batch_repair
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 53 个未满足需求
+[OPLOG] 批次 1/5 处理成功
+[OPLOG] 批次 2/5 处理成功
+[OPLOG] 批次 3/5 处理成功
+[OPLOG] 批次 4/5 处理成功
+[OPLOG] 批次 5/5 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2379s
+[OPLOG] 已保存实际训练数据: 特征值长度=8, 标签长度=8, 改进=0.0000
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0212s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0057s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0201s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0036s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0217s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.1060s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0202s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 8 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: urgency_repair
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0147s
+[OPLOG] 已保存实际训练数据: 特征值长度=9, 标签长度=9, 改进=1000000.0000
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0180s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3743s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0183s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0005s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0346s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1125s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0219s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0872s
+[OPLOG] local_search_repair: 0.4719s
+26.6s Found feasible solution with cost: 347.60
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0321s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0588s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0232s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0318s
+[OPLOG] local_search_repair: 0.0425s
+28.4s Iteration 7: New best feasible solution found!
+28.4s Objective: 3447.25, Gap: 0.00%, Time: 25.36s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0352s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4232s
+[OPLOG] local_search_repair: 0.4608s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0277s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0719s
+[OPLOG] local_search_repair: 0.0817s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0337s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0056s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0333s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 9 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: local_search_repair
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2335s
+[OPLOG] local_search_repair: 0.2623s
+[OPLOG] 已保存实际训练数据: 特征值长度=10, 标签长度=10, 改进=0.0000
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0217s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.6643s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0235s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9370s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0244s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0016s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0352s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2382s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0226s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0043s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0238s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 10 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: urgency_repair
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0005s
+[OPLOG] 已保存实际训练数据: 特征值长度=11, 标签长度=11, 改进=0.0000
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0270s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0004s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0244s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0437s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0229s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9834s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0233s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 58 个未满足需求
+[OPLOG] 批次 1/5 处理成功
+[OPLOG] 批次 2/5 处理成功
+[OPLOG] 批次 3/5 处理成功
+[OPLOG] 批次 4/5 处理成功
+[OPLOG] 批次 5/5 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2656s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0232s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2562s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0255s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0042s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0238s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0050s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0246s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 34 个未满足需求
+[OPLOG] 批次 1/3 处理成功
+[OPLOG] 批次 2/3 处理成功
+[OPLOG] 批次 3/3 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.1645s
+33.8s Found feasible solution with cost: 345.34
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0349s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0642s
+35.7s Iteration 11: New best feasible solution found!
+35.7s Objective: 3335.55, Gap: 0.00%, Time: 32.60s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0253s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3055s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0270s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 11 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: infeasible_repair
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0042s
+[OPLOG] 计算的实际特征: [71.41666666666667, 1.8492678462477117, 2.0, 132.07575757575756, 0.7438228900560113]
+[OPLOG] 已保存实际训练数据: 特征值长度=12, 标签长度=12, 改进=0.0000
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0279s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 12 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: infeasible_repair
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0058s
+[OPLOG] 计算的实际特征: [74.75, 1.7173387096774193, 2.0, 96.93333333333334, 0.7437200999811356]
+[OPLOG] 已保存实际训练数据: 特征值长度=13, 标签长度=13, 改进=0.0000
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0280s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2274s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0271s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 81 个未满足需求
+[OPLOG] 批次 1/7 处理成功
+[OPLOG] 批次 2/7 处理成功
+[OPLOG] 批次 3/7 处理成功
+[OPLOG] 批次 4/7 处理成功
+[OPLOG] 批次 5/7 处理成功
+[OPLOG] 批次 6/7 处理成功
+[OPLOG] 批次 7/7 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.3385s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0277s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8467s
+[OPLOG] local_search_repair: 0.9477s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0257s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2878s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0265s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9302s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0245s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 120 个未满足需求
+[OPLOG] 批次 1/10 处理成功
+[OPLOG] 批次 2/10 处理成功
+[OPLOG] 批次 3/10 处理成功
+[OPLOG] 批次 4/10 处理成功
+[OPLOG] 批次 5/10 处理成功
+[OPLOG] 批次 6/10 处理成功
+[OPLOG] 批次 7/10 处理成功
+[OPLOG] 批次 8/10 处理成功
+[OPLOG] 批次 9/10 处理成功
+[OPLOG] 批次 10/10 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.3763s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0285s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0060s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0289s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0008s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0279s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0048s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0322s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 67 个未满足需求
+[OPLOG] 批次 1/6 处理成功
+[OPLOG] 批次 2/6 处理成功
+[OPLOG] 批次 3/6 处理成功
+[OPLOG] 批次 4/6 处理成功
+[OPLOG] 批次 5/6 处理成功
+[OPLOG] 批次 6/6 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2989s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0398s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 13 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: urgency_repair
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1013s
+[OPLOG] 计算的实际特征: [98.0, 1.7, 2.0, 88.66666666666667, 0.7423823373876256]
+[OPLOG] 已保存实际训练数据: 特征值长度=14, 标签长度=14, 改进=0.0000
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0269s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0013s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0286s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 14 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: greedy_repair
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.1427s
+[OPLOG] 计算的实际特征: [78.0, 1.0, 2.0, 40.666666666666664, 0.7424738556488942]
+[OPLOG] 已保存实际训练数据: 特征值长度=15, 标签长度=15, 改进=0.0000
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0279s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0052s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0267s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 15 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: smart_batch_repair
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0162s
+[OPLOG] 已保存实际训练数据: 特征值长度=16, 标签长度=16, 改进=0.0000
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0374s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4093s
+[OPLOG] local_search_repair: 0.4877s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0285s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0052s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0264s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 8 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0538s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0317s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0151s
+42.4s Iteration 18: New best feasible solution found!
+42.4s Objective: 3290.85, Gap: 0.00%, Time: 39.35s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0288s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 16 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: local_search_repair
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9927s
+[OPLOG] local_search_repair: 1.1109s
+[OPLOG] 计算的实际特征: [65.61538461538461, 1.8873333333333335, 2.0, 47.333333333333336, 0.736666403442966]
+[OPLOG] 已保存实际训练数据: 特征值长度=17, 标签长度=17, 改进=0.0000
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0289s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0056s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0310s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 17 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: local_search_repair
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9350s
+[OPLOG] local_search_repair: 1.0657s
+[OPLOG] 计算的实际特征: [69.4, 1.6064935064935066, 2.0, 36.72222222222222, 0.7441271631966163]
+[OPLOG] 已保存实际训练数据: 特征值长度=18, 标签长度=18, 改进=0.0000
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0404s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 18 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: local_search_repair
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4033s
+[OPLOG] local_search_repair: 0.4873s
+[OPLOG] 计算的实际特征: [87.0, 1.5989898989898992, 2.0, 48.333333333333336, 0.7395631662445379]
+[OPLOG] 已保存实际训练数据: 特征值长度=19, 标签长度=19, 改进=0.0000
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0248s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 19 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: greedy_repair
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5813s
+[OPLOG] 计算的实际特征: [61.36486486486486, 1.6547254150702424, 2.0, 59.255319148936174, 0.7556730871410107]
+[OPLOG] 已保存实际训练数据: 特征值长度=20, 标签长度=20, 改进=0.0000
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0295s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2845s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0280s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 103 个未满足需求
+[OPLOG] 批次 1/8 处理成功
+[OPLOG] 批次 2/8 处理成功
+[OPLOG] 批次 3/8 处理成功
+[OPLOG] 批次 4/8 处理成功
+[OPLOG] 批次 5/8 处理成功
+[OPLOG] 批次 6/8 处理成功
+[OPLOG] 批次 7/8 处理成功
+[OPLOG] 批次 8/8 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.3992s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0299s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8870s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0285s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2610s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0281s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0055s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0294s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0056s
+[OPLOG] local_search_repair: 0.0673s
+48.1s Found feasible solution with cost: 344.52
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0408s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2864s
+[OPLOG] local_search_repair: 0.3064s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0290s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 48 个未满足需求
+[OPLOG] 批次 1/4 处理成功
+[OPLOG] 批次 2/4 处理成功
+[OPLOG] 批次 3/4 处理成功
+[OPLOG] 批次 4/4 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2203s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0421s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.1295s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0328s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 4 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0384s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0263s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.6261s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0407s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 20 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: local_search_repair
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.3901s
+[OPLOG] local_search_repair: 0.4374s
+[OPLOG] 计算的实际特征: [87.0, 1.6137931034482758, 2.0, 52.86666666666667, 0.7425339465493104]
+[OPLOG] 已保存实际训练数据: 特征值长度=21, 标签长度=21, 改进=0.0000
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0314s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8833s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0299s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.1124s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0418s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 14 个未满足需求
+[OPLOG] 批次 1/2 处理成功
+[OPLOG] 批次 2/2 处理成功
+[OPLOG] 迭代 2: 剩余 1 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 迭代 3: 剩余 1 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0922s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0337s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 63 个未满足需求
+[OPLOG] 批次 1/5 处理成功
+[OPLOG] 批次 2/5 处理成功
+[OPLOG] 批次 3/5 处理成功
+[OPLOG] 批次 4/5 处理成功
+[OPLOG] 批次 5/5 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2840s
+53.2s Found feasible solution with cost: 345.26
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0448s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0046s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0341s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4706s
+[OPLOG] local_search_repair: 0.5920s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0337s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2299s
+[OPLOG] local_search_repair: 0.3069s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0338s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0047s
+56.1s Iteration 23: New best feasible solution found!
+56.1s Objective: 3103.15, Gap: 0.00%, Time: 53.07s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0335s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.1539s
+[OPLOG] local_search_repair: 0.2411s
+55.0s Found feasible solution with cost: 343.36
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0376s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0234s
+55.1s Found feasible solution with cost: 342.08
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0364s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9180s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0369s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0014s
+58.0s Iteration 24: New best feasible solution found!
+58.0s Objective: 2969.44, Gap: 0.00%, Time: 54.94s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0398s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 21 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: infeasible_repair
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0046s
+[OPLOG] 已保存实际训练数据: 特征值长度=22, 标签长度=22, 改进=0.0000
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0361s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 22 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: smart_batch_repair
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 42 个未满足需求
+[OPLOG] 批次 1/4 处理成功
+[OPLOG] 批次 2/4 处理成功
+[OPLOG] 批次 3/4 处理成功
+[OPLOG] 批次 4/4 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.1996s
+[OPLOG] 已保存实际训练数据: 特征值长度=23, 标签长度=23, 改进=1000000.0000
+57.0s Found feasible solution with cost: 341.08
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0381s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0045s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0376s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 23 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: urgency_repair
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.3073s
+[OPLOG] 计算的实际特征: [50.0, 1.7, 2.0, 29.833333333333332, 0.7525078406989532]
+[OPLOG] 已保存实际训练数据: 特征值长度=24, 标签长度=24, 改进=0.0000
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0383s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0005s
+59.3s Iteration 26: New best feasible solution found!
+59.3s Objective: 2899.14, Gap: 0.00%, Time: 56.26s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0351s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3036s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0342s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 数据量不足 24 < 25, 随机选择一种修复算子 ...
+[OPLOG] 随机选择修复算子: urgency_repair
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.4000s
+[OPLOG] 计算的实际特征: [70.33333333333333, 1.8707641196013287, 2.0, 45.56410256410256, 0.7689262895434005]
+[OPLOG] 已保存实际训练数据: 特征值长度=25, 标签长度=25, 改进=0.0000
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0377s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2485s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0358s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2926s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0367s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2994s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0372s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2795s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0477s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 无缓存模型，开始首次训练
+[OPLOG] 自适应选择Ridge模型 (数据量: 25)
+[Tracker] Cached ML model at iteration 26
+[OPLOG] 模型训练完成, 已缓存到tracker
+[OPLOG] 16 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2632s
+[OPLOG] 计算的实际特征: [78.0, 2.572549019607843, 2.0, 41.333333333333336, 0.748043289048769]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=27, 标签长度=27, 改进=0.0000
+[OPLOG] ML修复完成: 132次预测, 1次成功插入, 16个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.3321s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0522s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.1259s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0389s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 11 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0648s
+61.0s Found feasible solution with cost: 339.26
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0396s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 0 迭代
+[OPLOG] 无未满足需求, 直接返回当前解
+62.9s Iteration 27: New best feasible solution found!
+62.9s Objective: 2804.84, Gap: 0.00%, Time: 59.86s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0393s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8321s
+[OPLOG] local_search_repair: 1.0276s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0399s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 1 迭代
+[OPLOG] 93 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.2746s
+[OPLOG] 计算的实际特征: [78.84, 1.7964444444444443, 2.0, 46.96190476190476, 0.735226236247975]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=30, 标签长度=30, 改进=0.0000
+[OPLOG] ML修复完成: 654次预测, 2次成功插入, 93个需求使用greedy修复
+[OPLOG] learning_based_repair: 1.4069s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0351s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0003s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0391s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0002s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0386s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 2 迭代
+[OPLOG] 无未满足需求, 直接返回当前解
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0396s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 3 迭代
+[OPLOG] 29 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4277s
+[OPLOG] 计算的实际特征: [72.0, 1.0, 2.0, 32.666666666666664, 0.7473111298513686]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=31, 标签长度=31, 改进=0.0000
+[OPLOG] ML修复完成: 198次预测, 0次成功插入, 29个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.4768s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0376s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.3273s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0386s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8798s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0374s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2842s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0418s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0044s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0501s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.3808s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0491s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 3 迭代
+[OPLOG] 16 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2718s
+[OPLOG] 计算的实际特征: [67.0, 1.4, 2.0, 52.0, 0.7529159919387525]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=33, 标签长度=33, 改进=0.0000
+[OPLOG] ML修复完成: 120次预测, 1次成功插入, 16个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.3390s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0483s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0042s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.1243s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.1847s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0390s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0037s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0408s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0055s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0370s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.4151s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0422s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9271s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0404s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.5501s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0405s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 4 迭代
+[OPLOG] 无未满足需求, 直接返回当前解
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0536s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0044s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0535s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 59 个未满足需求
+[OPLOG] 批次 1/5 处理成功
+[OPLOG] 批次 2/5 处理成功
+[OPLOG] 批次 3/5 处理成功
+[OPLOG] 批次 4/5 处理成功
+[OPLOG] 批次 5/5 处理成功
+[OPLOG] 迭代 2: 剩余 1 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2732s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0418s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2465s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0386s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2456s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0478s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.1328s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0388s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0024s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0511s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4302s
+[OPLOG] local_search_repair: 0.7342s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0414s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.0504s
+[OPLOG] local_search_repair: 1.3415s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0368s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9196s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0379s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0062s
+[OPLOG] local_search_repair: 0.3249s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0400s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0050s
+[OPLOG] local_search_repair: 0.0158s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0496s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 8 迭代
+[OPLOG] 21 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4394s
+[OPLOG] 计算的实际特征: [84.25, 1.9491166077738518, 2.0, 40.9, 0.7370314026309251]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=34, 标签长度=34, 改进=0.0000
+[OPLOG] ML修复完成: 138次预测, 0次成功插入, 21个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.4868s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0405s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2967s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0374s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5995s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0402s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0430s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0400s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 8 迭代
+[OPLOG] 无未满足需求, 直接返回当前解
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0519s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0044s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0357s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3322s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0423s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0447s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0374s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3297s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0490s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.3045s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0392s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0052s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0419s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 9 迭代
+[OPLOG] 32 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.4716s
+[OPLOG] 计算的实际特征: [79.5, 1.7543689320388351, 2.0, 43.111111111111114, 0.7444503511555197]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=35, 标签长度=35, 改进=0.0000
+[OPLOG] ML修复完成: 222次预测, 0次成功插入, 32个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.5263s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0398s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0005s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0400s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0058s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0375s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0028s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0422s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 10 迭代
+[OPLOG] 26 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.3844s
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=36, 标签长度=36, 改进=0.0000
+[OPLOG] ML修复完成: 174次预测, 0次成功插入, 26个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.4287s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0511s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0054s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0414s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8910s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0403s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0003s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0389s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5858s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0390s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0041s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0363s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.6343s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0393s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 6 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0472s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0393s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0003s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0385s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2073s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0379s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 47 个未满足需求
+[OPLOG] 批次 1/4 处理成功
+[OPLOG] 批次 2/4 处理成功
+[OPLOG] 批次 3/4 处理成功
+[OPLOG] 批次 4/4 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2175s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0333s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0047s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0359s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0057s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0362s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 35 个未满足需求
+[OPLOG] 批次 1/3 处理成功
+[OPLOG] 批次 2/3 处理成功
+[OPLOG] 批次 3/3 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.1654s
+88.1s Found feasible solution with cost: 335.08
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.1127s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2727s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0347s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1763s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0356s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0055s
+90.7s Iteration 39: New best feasible solution found!
+90.7s Objective: 2685.94, Gap: 0.00%, Time: 87.65s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0358s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0061s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0366s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1920s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0344s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0047s
+[OPLOG] local_search_repair: 0.0647s
+89.8s Found feasible solution with cost: 334.36
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0499s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.5797s
+[OPLOG] local_search_repair: 0.6285s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0357s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9450s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0329s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3480s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0482s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0048s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0384s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0483s
+[OPLOG] local_search_repair: 0.0791s
+94.1s Iteration 41: New best feasible solution found!
+94.1s Objective: 2658.13, Gap: 0.00%, Time: 91.07s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0377s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 15 迭代
+[OPLOG] 无未满足需求, 直接返回当前解
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0342s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3503s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0390s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0045s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0464s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 16 迭代
+[OPLOG] 20 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2970s
+[OPLOG] 计算的实际特征: [74.5, 1.5766666666666667, 2.0, 54.04761904761905, 0.7642681769591787]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=37, 标签长度=37, 改进=0.0000
+[OPLOG] ML修复完成: 156次预测, 0次成功插入, 20个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.3412s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0368s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0009s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0335s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0005s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0496s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0046s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0368s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0486s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0362s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2799s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0368s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 17 迭代
+[OPLOG] 无未满足需求, 直接返回当前解
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0400s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 18 迭代
+[OPLOG] 4 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0697s
+[OPLOG] 计算的实际特征: [32.0, 1.7, 2.0, 40.833333333333336, 0.7693125837976625]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=39, 标签长度=39, 改进=0.0000
+[OPLOG] ML修复完成: 36次预测, 1次成功插入, 4个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.1290s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0380s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 18 迭代
+[OPLOG] 1 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0181s
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=40, 标签长度=40, 改进=1000000.0000
+[OPLOG] ML修复完成: 6次预测, 0次成功插入, 1个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.0460s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0408s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0048s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0377s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9217s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0534s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.5757s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0366s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 101 个未满足需求
+[OPLOG] 批次 1/8 处理成功
+[OPLOG] 批次 2/8 处理成功
+[OPLOG] 批次 3/8 处理成功
+[OPLOG] 批次 4/8 处理成功
+[OPLOG] 批次 5/8 处理成功
+[OPLOG] 批次 6/8 处理成功
+[OPLOG] 批次 7/8 处理成功
+[OPLOG] 批次 8/8 处理成功
+[OPLOG] 迭代 2: 剩余 1 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.3542s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0405s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0047s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0376s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0048s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0435s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0370s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.1279s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2113s
+[OPLOG] local_search_repair: 0.2394s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0350s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5773s
+[OPLOG] local_search_repair: 1.7580s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0378s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9181s
+[OPLOG] local_search_repair: 1.0635s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0363s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3497s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0409s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8540s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0380s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0048s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0386s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2761s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0377s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2464s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0368s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 21 迭代
+[OPLOG] 138 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5825s
+[OPLOG] 计算的实际特征: [61.36486486486486, 1.6547254150702424, 2.0, 59.255319148936174, 0.7556730871410107]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=41, 标签长度=41, 改进=0.0000
+[OPLOG] ML修复完成: 972次预测, 0次成功插入, 138个需求使用greedy修复
+[OPLOG] learning_based_repair: 1.7035s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0388s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0398s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0403s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0060s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0436s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2849s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0438s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0492s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0413s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0061s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0518s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 30 个未满足需求
+[OPLOG] 批次 1/3 处理成功
+[OPLOG] 批次 2/3 处理成功
+[OPLOG] 批次 3/3 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.1462s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0362s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3441s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0413s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1478s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0525s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 23 迭代
+[OPLOG] 29 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.5635s
+[OPLOG] 计算的实际特征: [74.58333333333333, 1.5676470588235294, 2.0, 44.1764705882353, 0.7491950883352775]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=43, 标签长度=43, 改进=0.0000
+[OPLOG] ML修复完成: 222次预测, 1次成功插入, 29个需求使用greedy修复
+[OPLOG] learning_based_repair: 0.6399s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0400s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0048s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0407s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9404s
+[OPLOG] local_search_repair: 1.0312s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0423s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0451s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0413s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0045s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0418s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0044s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0415s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.0199s
+[OPLOG] local_search_repair: 0.0706s
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0423s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.0143s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0408s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.0441s
+[OPLOG] local_search_repair: 1.1991s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0391s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2885s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0395s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 26 迭代
+[OPLOG] 138 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5949s
+[OPLOG] 计算的实际特征: [61.36486486486486, 1.6547254150702424, 2.0, 59.255319148936174, 0.7556730871410107]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=44, 标签长度=44, 改进=0.0000
+[OPLOG] ML修复完成: 972次预测, 0次成功插入, 138个需求使用greedy修复
+[OPLOG] learning_based_repair: 1.7181s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0527s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0978s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0415s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 80 个未满足需求
+[OPLOG] 批次 1/7 处理成功
+[OPLOG] 批次 2/7 处理成功
+[OPLOG] 批次 3/7 处理成功
+[OPLOG] 批次 4/7 处理成功
+[OPLOG] 批次 5/7 处理成功
+[OPLOG] 批次 6/7 处理成功
+[OPLOG] 批次 7/7 处理成功
+[OPLOG] 迭代 2: 剩余 1 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 迭代 3: 剩余 1 个未满足需求
+[OPLOG] 批次 1/1 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.3457s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0423s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2322s
+114.0s Found feasible solution with cost: 333.72
+[OPLOG] 开始执行 infeasible_removal 算子
+[OPLOG] infeasible_removal: 0.0421s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0051s
+116.0s Iteration 53: New best feasible solution found!
+116.0s Objective: 2654.03, Gap: 0.00%, Time: 112.96s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0417s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8369s
+[OPLOG] local_search_repair: 0.9272s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0414s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.0417s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.1357s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0041s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0411s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.2841s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0407s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2624s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0386s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 138 个未满足需求
+[OPLOG] 批次 1/11 处理成功
+[OPLOG] 批次 2/11 处理成功
+[OPLOG] 批次 3/11 处理成功
+[OPLOG] 批次 4/11 处理成功
+[OPLOG] 批次 5/11 处理成功
+[OPLOG] 批次 6/11 处理成功
+[OPLOG] 批次 7/11 处理成功
+[OPLOG] 批次 8/11 处理成功
+[OPLOG] 批次 9/11 处理成功
+[OPLOG] 批次 10/11 处理成功
+[OPLOG] 批次 11/11 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.3512s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0436s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8431s
+[OPLOG] local_search_repair: 0.9241s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0419s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2129s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0426s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.9601s
+[OPLOG] local_search_repair: 1.0689s
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0411s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.1801s
+[OPLOG] local_search_repair: 0.2186s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0421s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.1911s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0491s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0057s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0412s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 22 个未满足需求
+[OPLOG] 批次 1/2 处理成功
+[OPLOG] 批次 2/2 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.1148s
+120.4s Found feasible solution with cost: 333.36
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0431s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 92 个未满足需求
+[OPLOG] 批次 1/8 处理成功
+[OPLOG] 批次 2/8 处理成功
+[OPLOG] 批次 3/8 处理成功
+[OPLOG] 批次 4/8 处理成功
+[OPLOG] 批次 5/8 处理成功
+[OPLOG] 批次 6/8 处理成功
+[OPLOG] 批次 7/8 处理成功
+[OPLOG] 批次 8/8 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.3659s
+120.9s Found feasible solution with cost: 330.54
+[OPLOG] 开始执行 surplus_inventory_removal 算子
+[OPLOG] surplus_inventory_removal: 0.0385s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3234s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0419s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.8608s
+[OPLOG] local_search_repair: 1.1583s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0485s
+[OPLOG] 开始执行 local_search_repair 算子
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.2137s
+[OPLOG] local_search_repair: 0.3012s
+123.0s Found feasible solution with cost: 329.64
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0371s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.3988s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0367s
+[OPLOG] 开始执行 learning_based_repair 算子
+[OPLOG] 使用缓存模型, 距离上次训练 27 迭代
+[OPLOG] 138 个需求ML插入失败, 使用greedy修复
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5804s
+[OPLOG] 计算的实际特征: [61.36486486486486, 1.6547254150702424, 2.0, 59.255319148936174, 0.7556730871410107]
+[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度=45, 标签长度=45, 改进=0.0000
+[OPLOG] ML修复完成: 972次预测, 0次成功插入, 138个需求使用greedy修复
+[OPLOG] learning_based_repair: 1.7049s
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0418s
+[OPLOG] 开始执行 infeasible_repair 算子
+[OPLOG] infeasible_repair: 0.0052s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0509s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0713s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0419s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 63 个未满足需求
+[OPLOG] 批次 1/5 处理成功
+[OPLOG] 批次 2/5 处理成功
+[OPLOG] 批次 3/5 处理成功
+[OPLOG] 批次 4/5 处理成功
+[OPLOG] 批次 5/5 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2663s
+125.9s Found feasible solution with cost: 327.46
+[OPLOG] 开始执行 path_removal 算子
+[OPLOG] path_removal: 0.0400s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.0186s
+[OPLOG] 开始执行 random_removal 算子
+[OPLOG] random_removal: 0.0418s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 64 个未满足需求
+[OPLOG] 批次 1/5 处理成功
+[OPLOG] 批次 2/5 处理成功
+[OPLOG] 批次 3/5 处理成功
+[OPLOG] 批次 4/5 处理成功
+[OPLOG] 批次 5/5 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2719s
+126.5s Found feasible solution with cost: 327.10
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0378s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 56 个未满足需求
+[OPLOG] 批次 1/5 处理成功
+[OPLOG] 批次 2/5 处理成功
+[OPLOG] 批次 3/5 处理成功
+[OPLOG] 批次 4/5 处理成功
+[OPLOG] 批次 5/5 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.2365s
+128.7s Iteration 54: New best feasible solution found!
+128.8s Objective: 2363.03, Gap: 0.00%, Time: 125.69s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0346s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 1.5873s
+[OPLOG] 开始执行 shaw_removal 算子
+[OPLOG] shaw_removal: 0.0361s
+[OPLOG] 开始执行 urgency_repair 算子
+[OPLOG] urgency_repair: 0.2102s
+[OPLOG] 开始执行 worst_removal 算子
+[OPLOG] worst_removal: 0.0272s
+[OPLOG] 开始执行 inventory_balance_repair 算子
+[OPLOG] inventory_balance_repair: 0.3376s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0426s
+[OPLOG] 开始执行 smart_batch_repair 算子
+[OPLOG] 问题规模: 138 需求, 超时: 13.8s, 批次大小: 13
+[OPLOG] 迭代 1: 剩余 28 个未满足需求
+[OPLOG] 批次 1/3 处理成功
+[OPLOG] 批次 2/3 处理成功
+[OPLOG] 批次 3/3 处理成功
+[OPLOG] 所有需求已满足, 算法提前退出
+[OPLOG] 开始最终强制装载
+[OPLOG] 强制装载完成, 处理 0 个需求
+[OPLOG] Smart Batch Repair 完成: 0.1363s
+[OPLOG] 开始执行 periodic_shaw_removal 算子
+[OPLOG] periodic_shaw_removal: 0.0425s
+[OPLOG] 开始执行 greedy_repair 算子
+[OPLOG] greedy_repair: 0.3668s
+[STOP] MaxIterations 触发停止条件 (运行时间: 128.83s)
+130.4s Step 8耗时: 128.84s
+130.4s 优化总耗时: 130.37s
+130.4s Step 9: 处理结果...
+130.4s Total iterations tracked: 56
+130.4s Best objective found: 2363.0264
+130.4s Final Gap: 4.45%
+130.4s ALNS Final Gap: 7.84%
+130.4s Best Heuristic Solution Objective: 2279.03
+130.4s Vehicles Used in Best Solution: 292
+130.4s Best Solution Cost: 327.10
+130.4s ✓ 所有车辆的装载体积都满足容量约束
+130.4s Step 9耗时: 0.07s
+130.4s Step 10: 生成报告和图表...
+131.5s Step 10耗时: 1.07s
+***************************************************************************
+                      优化完成! 2025-09-23 01:38:40.884912
+***************************************************************************
+====================================================================================================
+***************************************************************************
+                     The Vehicle Loading Plan is Done!
+***************************************************************************
+(Problem2) PS D:\Gurobi_code\Problem2\ALNSCode> python check_solution.py
+INFO:__main__:加载输入数据...
+INFO:DataALNS:配置参数加载成功
+INFO:DataALNS:成功加载 订单需求信息: 138 行数据
+INFO:DataALNS:成功加载 生产基地库存容量上限: 2 行数据
+INFO:DataALNS:成功加载 SKU体积信息: 37 行数据
+INFO:DataALNS:成功加载 车辆类型信息: 2 行数据
+INFO:DataALNS:成功加载 生产基地生产计划: 101 行数据
+INFO:DataALNS:成功加载 生产基地期初库存: 37 行数据
+INFO:DataALNS:数据完整性验证通过
+INFO:DataALNS:数据加载和处理完成
+INFO:__main__:加载输出数据...
+INFO:OutputDataALNS:开始加载数据集: dataset_29
+INFO:OutputDataALNS:成功加载文件: D:\Gurobi_code\Problem2\OutPut-ALNS\multiple-periods\small\dataset_29\opt_result.csv, 形状: (292, 7)
+INFO:OutputDataALNS:成功加载文件: D:\Gurobi_code\Problem2\OutPut-ALNS\multiple-periods\small\dataset_29\opt_details.csv, 形状: (292, 11)
+INFO:OutputDataALNS:成功加载文件: D:\Gurobi_code\Problem2\OutPut-ALNS\multiple-periods\small\dataset_29\opt_summary.csv, 形状: (292, 9)
+INFO:OutputDataALNS:成功加载文件: D:\Gurobi_code\Problem2\OutPut-ALNS\multiple-periods\small\dataset_29\non_fulfill.csv, 形状: (0, 3)
+INFO:OutputDataALNS:成功加载文件: D:\Gurobi_code\Problem2\OutPut-ALNS\multiple-periods\small\dataset_29\sku_inv_left.csv, 形状: (222, 4)
+INFO:OutputDataALNS:字典索引生成完成
+INFO:OutputDataALNS:数据验证通过
+INFO:OutputDataALNS:数据加载完成
+
+数据统计:
+输入数据 - 工厂: 2, 经销商: 6, SKU: 37
+输出数据统计: {'total_deliveries': 206, 'total_vehicles_used': 292, 'unfulfilled_demands': 0, 'inventory_records': 222, 'total_quantity_shipped': 10552, 'unique_vehicles': 292}
+INFO:__main__:开始解决方案验证...
+INFO:__main__:检查订单满足情况...
+INFO:__main__:检查生产基地库存上限约束...
+INFO:__main__:检查车辆容量约束...
+INFO:__main__:车辆 6 (类型: 15.1) 在第 1 天未达到最小起运量: 最小起运量 70, 实际装载 45.0
+INFO:__main__:车辆 289 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 20.0
+INFO:__main__:车辆 101 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 43.2
+INFO:__main__:车辆 87 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 27.2
+INFO:__main__:车辆 88 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 22.1
+INFO:__main__:车辆 85 (类型: 15.1) 在第 1 天未达到最小起运量: 最小起运量 70, 实际装载 24.0
+INFO:__main__:车辆 217 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 24.3
+INFO:__main__:车辆 82 (类型: 15.1) 在第 1 天未达到最小起运量: 最小起运量 70, 实际装载 39.1
+INFO:__main__:车辆 288 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 14.3
+INFO:__main__:车辆 143 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 43.2
+INFO:__main__:车辆 33 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 16.8
+INFO:__main__:车辆 79 (类型: 9.5) 在第 1 天未达到最小起运量: 最小起运量 47, 实际装载 13.5
+INFO:__main__:车辆 262 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 45.6
+INFO:__main__:车辆 10 (类型: 15.1) 在第 2 天未达到最小起运量: 最小起运量 70, 实际装载 10.0
+INFO:__main__:车辆 155 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 13.2
+INFO:__main__:车辆 7 (类型: 15.1) 在第 2 天未达到最小起运量: 最小起运量 70, 实际装载 2.5
+INFO:__main__:车辆 259 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 46.8
+INFO:__main__:车辆 161 (类型: 15.1) 在第 2 天未达到最小起运量: 最小起运量 70, 实际装载 9.2
+INFO:__main__:车辆 36 (类型: 15.1) 在第 2 天未达到最小起运量: 最小起运量 70, 实际装载 23.2
+INFO:__main__:车辆 100 (类型: 15.1) 在第 2 天未达到最小起运量: 最小起运量 70, 实际装载 6.0
+INFO:__main__:车辆 102 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 36.4
+INFO:__main__:车辆 103 (类型: 15.1) 在第 2 天未达到最小起运量: 最小起运量 70, 实际装载 24.0
+INFO:__main__:车辆 154 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 30.6
+INFO:__main__:车辆 156 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 9.2
+INFO:__main__:车辆 285 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 37.4
+INFO:__main__:车辆 290 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 5.0
+INFO:__main__:车辆 291 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 12.5
+INFO:__main__:车辆 18 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 33.0
+INFO:__main__:车辆 151 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 31.0
+INFO:__main__:车辆 190 (类型: 15.1) 在第 2 天未达到最小起运量: 最小起运量 70, 实际装载 37.7
+INFO:__main__:车辆 216 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 13.5
+INFO:__main__:车辆 219 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 2.6
+INFO:__main__:车辆 63 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 13.5
+INFO:__main__:车辆 212 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 19.6
+INFO:__main__:车辆 282 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 43.5
+INFO:__main__:车辆 286 (类型: 9.5) 在第 2 天未达到最小起运量: 最小起运量 47, 实际装载 32.3
+INFO:__main__:车辆 180 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 48.3
+INFO:__main__:车辆 146 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 43.2
+INFO:__main__:车辆 20 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 35.0
+INFO:__main__:车辆 152 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 33.0
+INFO:__main__:车辆 65 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 20.4
+INFO:__main__:车辆 80 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 7.5
+INFO:__main__:车辆 11 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 1.2
+INFO:__main__:车辆 175 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 58.8
+INFO:__main__:车辆 21 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 21.0
+INFO:__main__:车辆 47 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 18.4
+INFO:__main__:车辆 51 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 18.9
+INFO:__main__:车辆 211 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 17.6
+INFO:__main__:车辆 255 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 30.0
+INFO:__main__:车辆 233 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 48.3
+INFO:__main__:车辆 261 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 5.0
+INFO:__main__:车辆 58 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 23.4
+INFO:__main__:车辆 99 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 1.4
+INFO:__main__:车辆 117 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 33.6
+INFO:__main__:车辆 192 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 17.5
+INFO:__main__:车辆 292 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 4.8
+INFO:__main__:车辆 19 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 23.4
+INFO:__main__:车辆 22 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 12.6
+INFO:__main__:车辆 35 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 45.6
+INFO:__main__:车辆 62 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 18.0
+INFO:__main__:车辆 78 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 16.8
+INFO:__main__:车辆 119 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 21.0
+INFO:__main__:车辆 127 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 40.5
+INFO:__main__:车辆 157 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 3.9
+INFO:__main__:车辆 158 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 3.0
+INFO:__main__:车辆 218 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 6.9
+INFO:__main__:车辆 221 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 50.7
+INFO:__main__:车辆 126 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 43.2
+INFO:__main__:车辆 129 (类型: 15.1) 在第 3 天未达到最小起运量: 最小起运量 70, 实际装载 37.7
+INFO:__main__:车辆 213 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 32.2
+INFO:__main__:车辆 214 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 36.4
+INFO:__main__:车辆 215 (类型: 9.5) 在第 3 天未达到最小起运量: 最小起运量 47, 实际装载 22.1
+INFO:__main__:检查库存流转约束...
+
+============================================================
+解决方案验证结果摘要
+============================================================
+需求满足约束: ✅ 通过
+
+生产基地库存上限约束: ✅ 通过
+
+车辆容量约束: ✅ 通过
+
+库存流转约束: ✅ 通过
+
+总违反数量: 0
+解决方案状态: 可行
+============================================================
+(Problem2) PS D:\Gurobi_code\Problem2\ALNSCode>

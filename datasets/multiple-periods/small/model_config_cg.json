@@ -1,0 +1,14 @@
+{
+    "solver_id": "GUROBI",
+    "pun_factor1": 5000,
+    "pun_factor2": 5000,
+    "pun_factor3": 5000,
+    "pun_factor4": 5000,
+    "pun_factor5": 5000,
+    "pattern_batch": 100,
+    "pattern_num_shrink_to": 15000,
+    "trigger_shrink_level": 20000,
+    "gap_limit": 0,
+    "time_limit": 900,
+    "output_flag": 1
+}

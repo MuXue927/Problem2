@@ -10,7 +10,7 @@ current_dir = Path(__file__).parent
 
 from ALNSCode.InputDataALNS import DataALNS
 from ALNSCode.OutputDataALNS import OutPutData
-from ALNSCode.alns_config import ALNSConfig
+from ALNSCode.alns_config import default_config as ALNSConfig
 
 def quick_validation():
     """快速验证库存一致性"""

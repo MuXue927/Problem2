@@ -13,7 +13,7 @@ from pathlib import Path
 
 try:
     from ALNSCode.main import ALNSOptimizer, run_model
-    from ALNSCode.alns_config import ALNSConfig
+    from ALNSCode.alns_config import default_config as ALNSConfig
 except ImportError as e:
     print(f"导入失败: {e}")
     sys.exit(1)

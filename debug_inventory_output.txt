@@ -1,0 +1,5 @@
+maps.horizons = 3\nidx_to_plant = ['P1']\nidx_to_sku = ['A', 'B']\ns_arr.shape = (1, 2, 4)\nshipments.shape = (1, 2, 4)\nprod.shape = (1, 2, 4)\ns_arr (initial baseline slice):\n[[[10.,  0.,  0.,  0.],
+  [ 5.,  0.,  0.,  0.]]]\nshipments:\n[[[0., 4., 0., 0.],
+  [0., 0., 0., 0.]]]\nprod:\n[[[0., 2., 1., 0.],
+  [0., 0., 3., 0.]]]\ns_copy after numpy core:\n[[[10.,  8.,  9.,  9.],
+  [ 5.,  5.,  8.,  8.]]]\nstate2.s_ikt (baseline compute_inventory):\n('P1', 'A', 0): 10.0\n('P1', 'A', 1): 8.0\n('P1', 'A', 2): 9.0\n('P1', 'A', 3): 9.0\n('P1', 'B', 0): 5.0\n('P1', 'B', 1): 5.0\n('P1', 'B', 2): 8.0\n('P1', 'B', 3): 8.0

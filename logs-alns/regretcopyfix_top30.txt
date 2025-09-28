@@ -1,0 +1,40 @@
+Sun Sep 28 16:18:06 2025    logs-alns/short_run_after_regretcopyfix.prof
+
+         111346148 function calls (111298081 primitive calls) in 81.538 seconds
+
+   Ordered by: cumulative time
+   List reduced from 7916 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   1696/1    0.061    0.000   81.645   81.645 {built-in method builtins.exec}
+        1    0.001    0.001   81.645   81.645 profile_short_run.py:1(<module>)
+        1    0.000    0.000   78.594   78.594 main.py:37(run_model)
+        1    0.001    0.001   78.591   78.591 alns_optimizer.py:479(run_optimization)
+        1    0.003    0.003   77.684   77.684 ALNS.py:151(iterate)
+        1    0.001    0.001   55.998   55.998 repair_operators.py:842(__call__)
+        1    0.771    0.771   55.997   55.997 repair_operators.py:521(regret_based_repair)
+    10032    0.326    0.000   51.385    0.005 repair_utils.py:563(compute_improvement)
+    10209   16.797    0.002   50.889    0.005 alnsopt.py:257(objective)
+       11    0.005    0.000   21.396    1.945 repair_operators.py:80(__call__)
+    80024    0.423    0.000   20.465    0.000 repair_utils.py:157(veh_loading)
+81278/81200   16.541    0.000   19.899    0.000 alnsopt.py:495(veh_loading)
+      186    0.008    0.000   14.315    0.077 __init__.py:1(<module>)
+    10063    9.386    0.001   13.023    0.001 alnsopt.py:350(compute_shipped)
+ 63799866   12.503    0.000   12.503    0.000 {method 'get' of 'dict' objects}
+        6    0.582    0.097   12.439    2.073 repair_operators.py:123(greedy_repair)
+    10066    8.513    0.001   11.668    0.001 alnsopt.py:171(validate)
+        1    0.007    0.007    8.103    8.103 repair_operators.py:449(smart_batch_repair)
+     2493    0.611    0.000    6.693    0.003 repair_utils.py:408(_process_demand_batch)
+16487136/16486271    3.151    0.000    3.153    0.000 {built-in method builtins.getattr}
+   1777/5    0.013    0.000    3.053    0.611 <frozen importlib._bootstrap>:1349(_find_and_load)
+   1744/5    0.009    0.000    3.053    0.611 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)
+   1700/4    0.007    0.000    3.050    0.763 <frozen importlib._bootstrap>:911(_load_unlocked)
+   1446/4    0.005    0.000    3.050    0.762 <frozen importlib._bootstrap_external>:1020(exec_module)
+   4069/8    0.008    0.000    3.050    0.381 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+  8025893    1.479    0.000    3.007    0.000 alnsopt.py:329(compute_veh_load)
+    744/5    0.002    0.000    2.935    0.587 {built-in method builtins.__import__}
+        1    0.000    0.000    2.177    2.177 combined_stopping.py:1(<module>)
+        1    0.000    0.000    2.175    2.175 ALNS.py:1(<module>)
+ 12843668    2.158    0.000    2.158    0.000 {method 'items' of 'dict' objects}
+
+
