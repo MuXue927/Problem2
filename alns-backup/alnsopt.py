@@ -234,11 +234,14 @@ class SolutionState:
         new_state.tracker = self.tracker  # 共享同一个tracker引用
         return new_state
 
-
-def veh_loading(state: SolutionState, veh: Vehicle, orders: Dict[str, int]):
+def veh_loading(state: SolutionState, veh: Vehicle, orders: Dict[str, int], commit: bool = True):
     """
     车辆装载函数, 考虑车辆容量约束和可用库存, 
     根据车辆可用容量和订单数量, 自动分配多辆车辆
+
+    参数:
+    - commit: 如果为 False, 则函数不向 state.vehicles 添加新 vehicle
+      便于在模拟时评估插入效果 (caller 应在临时 state 上模拟或使用 copy)
     """
     data = state.data
     fact_id, dealer_id, veh_type, day = veh.fact_id, veh.dealer_id, veh.type, veh.day
@@ -252,7 +255,7 @@ def veh_loading(state: SolutionState, veh: Vehicle, orders: Dict[str, int]):
                     used_inv[sku_id] = used_inv.get(sku_id, 0) + qty
     
     for sku_id, order_qty in orders.items():
-        if sku_id not in data.skus_plant[fact_id]:
+        if sku_id not in data.skus_plant.get(fact_id, []):
             continue
         remain_qty = order_qty
         
@@ -269,12 +272,12 @@ def veh_loading(state: SolutionState, veh: Vehicle, orders: Dict[str, int]):
             cap = data.veh_type_cap[veh_type]
             
             # 计算当前车辆中可以装载该SKU的最大数量
-            max_qty_by_cap = (cap - current_load) // data.sku_sizes[sku_id]
+            max_qty_by_cap = int((cap - current_load) // data.sku_sizes[sku_id]) if data.sku_sizes[sku_id] > 0 else 0
             load_qty = min(remain_qty, available, max_qty_by_cap)
             
             if load_qty <= 0:
-                # 当前车辆已满, 加入队列, 换新车
-                if not veh.is_empty():
+                # 当前车辆已满或无法装载更多，若当前veh已有货且commit=True则加入state.vehicles；否则换新车
+                if veh.cargo and commit:
                     state.vehicles.append(veh)
                 veh = Vehicle(fact_id, dealer_id, veh_type, day, data)
                 continue
@@ -282,16 +285,16 @@ def veh_loading(state: SolutionState, veh: Vehicle, orders: Dict[str, int]):
             used_inv[sku_id] = used_inv.get(sku_id, 0) + load_qty
             remain_qty -= load_qty
         
-        # 最后一次循环后, 若veh有货且未加入, 则加入
-        if not veh.is_empty() and veh not in state.vehicles:
+        # 最后一次循环后, 若veh有货且commit且未加入, 则加入
+        if veh.cargo and commit and veh not in state.vehicles:
             state.vehicles.append(veh)
     
-    # 装载完毕后, 重新计算库存
-    state.compute_inventory()
+    # 装载完毕后, 重新计算库存（仅在commit=True时更新主state库存）
+    if commit:
+        state.compute_inventory()
     
     return True
                 
-
 
 def initial_solution(state: SolutionState, rng: rnd.Generator):
     """
@@ -347,7 +350,6 @@ def initial_solution(state: SolutionState, rng: rnd.Generator):
         state = smart_batch_repair(state, rng)
     return state
 
-
 def random_removal(current: SolutionState, rng: rnd.Generator, degree: float = 0.25):
     """
     随机移除解中指定比例的车辆
@@ -376,7 +378,6 @@ def random_removal(current: SolutionState, rng: rnd.Generator, degree: float = 0
     print(f"[OPLOG] random_removal: {time.time() - t0:.4f}s")
     return state
 
-
 class RandomRemovalOperator:
     """
     带参数的随机移除算子包装类
@@ -387,7 +388,6 @@ class RandomRemovalOperator:
     
     def __call__(self, current: SolutionState, rng: rnd.Generator):
         return random_removal(current, rng, self.degree)
-
 
 def worst_removal(current: SolutionState, rng: rnd.Generator):
     """
@@ -462,23 +462,31 @@ def surplus_inventory_removal(current: SolutionState, rng: rnd.Generator):
     if len(state.vehicles) <= 1:
         print(f"[OPLOG] surplus_inventory_removal: {time.time() - t0:.4f}s")
         return state
-    plant_max_inv = {}
+
+    # 计算每个 (plant, day) 的总库存
+    plant_day_inv = {}
     for (plant, sku_id, day), inv in state.s_ikt.items():
-        if plant not in plant_max_inv or inv > plant_max_inv[plant][1]:
-            plant_max_inv[plant] = (sku_id, inv)
-    highest_inv = {(plant, sku_info[0], day): sku_info[1] 
-                  for plant, sku_info in plant_max_inv.items() 
-                  for day in range(1, data.horizons + 1)}
+        if day >= 1:
+            plant_day_inv[(plant, day)] = plant_day_inv.get((plant, day), 0) + inv
+
+    if not plant_day_inv:
+        print(f"[OPLOG] surplus_inventory_removal: 无库存记录")
+        return state
+
+    # 找到库存最多的若干 (plant, day)
+    sorted_plant_days = sorted(plant_day_inv.items(), key=lambda x: x[1], reverse=True)
+    # 选取候选的 (plant, day) 集合
+    candidate_plant_days = [pd for pd, _ in sorted_plant_days[:max(1, len(sorted_plant_days)//2)]]
+
     removal_candidates = set()
     for i, veh in enumerate(state.vehicles):
-        for (plant, sku_id, day) in highest_inv:
-            if veh.fact_id == plant and veh.day == day:
-                removal_candidates.add(i)
+        if (veh.fact_id, veh.day) in candidate_plant_days:
+            removal_candidates.add(i)
     removal_candidates = sorted(list(removal_candidates), reverse=True)
     if removal_candidates:
         ub = max(1, len(removal_candidates) // 2)
         num_remove = random.randint(1, ub)
-        selected_indices = rng.choice(removal_candidates, size=num_remove, replace=False)
+        selected_indices = rnd.choice(list(removal_candidates), size=num_remove, replace=False)
         selected_indices = sorted(selected_indices, reverse=True)
         for idx in selected_indices:
             if 0 <= idx < len(state.vehicles):
@@ -522,7 +530,6 @@ def shaw_removal(current: SolutionState, rng: rnd.Generator, degree: float = 0.3
     state.compute_inventory()
     print(f"[OPLOG] shaw_removal: {time.time() - t0:.4f}s")
     return state
-
 
 class ShawRemovalOperator:
     """
@@ -700,17 +707,21 @@ def path_removal(current: SolutionState, rng: rnd.Generator):
     
     
 # 局部搜索修复
-def local_search_repair(partial: SolutionState, rng: rnd.Generator):
+def local_search_repair(partial: SolutionState, rng: rnd.Generator, max_iter: int = 10, time_limit: float = 5.0):
     """使用局部搜索改进解"""
     t0 = time.time()
     print(f"[OPLOG] 开始执行 local_search_repair 算子")
-    state = greedy_repair(partial, rng)  # 先使用贪心修复获得可行解
+    # 先基于贪心修复得到一个稳定解的副本
+    state = partial.copy()
+    state = greedy_repair(state, rng)
     data = state.data
     improved = True
-    while improved:
+    iter_count = 0
+    while improved and iter_count < max_iter and (time.time() - t0) < time_limit:
+        iter_count += 1
         improved = False
         old_obj = state.objective()
-        for i, veh in enumerate(state.vehicles):
+        for i, veh in enumerate(list(state.vehicles)):
             current_load = state.compute_veh_load(veh)
             capacity = data.veh_type_cap[veh.type]
             for veh_type in state.data.all_veh_types:
@@ -723,11 +734,13 @@ def local_search_repair(partial: SolutionState, rng: rnd.Generator):
                     old_veh = state.vehicles[i]
                     state.vehicles[i] = new_veh
                     new_obj = state.objective()
-                    if new_obj < old_obj:
+                    if new_obj < old_obj - 1e-12:
                         improved = True
+                        old_obj = new_obj
                     else:
                         state.vehicles[i] = old_veh
-    print(f"[OPLOG] local_search_repair: {time.time() - t0:.4f}s")
+        # 若无改进则退出
+    print(f"[OPLOG] local_search_repair: {time.time() - t0:.4f}s (iters={iter_count})")
     return state
     
     
@@ -742,16 +755,18 @@ def greedy_repair(partial: SolutionState, rng: rnd.Generator):
     data = state.data
     shipped = state.compute_shipped()
     unsatisfied = []
+    supply_chain = data.construct_supply_chain()
     for (dealer, sku_id), demand in data.demands.items():
         shipped_qty = shipped.get((dealer, sku_id), 0)
         if demand > 0 and shipped_qty < demand:
             unmet = demand - shipped_qty
             demand_ratio = unmet / demand
             total_available = 0
-            supply_chain = data.construct_supply_chain()
-            for plant in [plant for (plant, dealer_key), skus in supply_chain.items() if dealer_key == dealer and sku_id in skus]:
-                for day in range(1, data.horizons + 1):
-                    total_available += state.s_ikt.get((plant, sku_id, day - 1), 0) + data.sku_prod_each_day.get((plant, sku_id, day), 0)
+            # 统一使用 supply_chain dict 的 items() 访问模式
+            for (plant, dealer_key), skus in supply_chain.items():
+                if dealer_key == dealer and sku_id in skus:
+                    for day in range(1, data.horizons + 1):
+                        total_available += state.s_ikt.get((plant, sku_id, day - 1), 0) + data.sku_prod_each_day.get((plant, sku_id, day), 0)
             stock_urgency = 1.0 if total_available == 0 else min(1.0, unmet / total_available)
             priority = 0.8 * demand_ratio + 0.2 * stock_urgency
             unsatisfied.append(((dealer, sku_id), unmet, priority))
@@ -770,7 +785,7 @@ def greedy_repair(partial: SolutionState, rng: rnd.Generator):
                 veh_types = sorted(list(data.all_veh_types), key=lambda x: data.veh_type_cap[x], reverse=True)
                 for veh_type in veh_types:
                     cap = data.veh_type_cap[veh_type]
-                    max_qty = int(cap // data.sku_sizes[sku_id])
+                    max_qty = int(cap // data.sku_sizes[sku_id]) if data.sku_sizes[sku_id] > 0 else 0
                     load_qty = min(remain_demand, available, max_qty)
                     if load_qty <= 0:
                         continue
@@ -789,7 +804,6 @@ def greedy_repair(partial: SolutionState, rng: rnd.Generator):
     print(f"[OPLOG] greedy_repair: {time.time() - t0:.4f}s")
     return state
 
-
 def inventory_balance_repair(partial: SolutionState, rng: rnd.Generator):
     """
     基于库存平衡的修复算子
@@ -805,12 +819,20 @@ def inventory_balance_repair(partial: SolutionState, rng: rnd.Generator):
         shipped_qty = shipped.get((dealer, sku_id), 0)
         if shipped_qty < demand and demand > 0:
             unsatisfied[(dealer, sku_id)] = demand - shipped_qty
+
+    # 计算每个 (plant, day) 的总库存
     plant_inventory = {}
     for (plant, sku_id, day), inv in state.s_ikt.items():
-        plant_inventory[plant, day] = plant_inventory.get((plant, day), 0) + inv
-    sorted_plants = sorted(plant_inventory.items(), key=lambda x: x[1], reverse=True)
-    for (plant, day), _ in sorted_plants:
-        dealers = [dealer for (p, dealer) in data.construct_supply_chain() if p == plant]
+        # 只关注 day >=1 的周期库存
+        if day >= 1:
+            plant_inventory[(plant, day)] = plant_inventory.get((plant, day), 0) + inv
+
+    # 将 (plant,day) 按库存降序排列
+    sorted_plant_days = sorted(plant_inventory.items(), key=lambda x: x[1], reverse=True)
+    supply_chain = data.construct_supply_chain()
+    for (plant, day), _ in sorted_plant_days:
+        # 获取该 plant 对应的经销商列表
+        dealers = [dealer for (p, dealer), skus in supply_chain.items() if p == plant]
         for dealer in dealers:
             veh_type = rng.choice(list(data.all_veh_types))
             vehicle = Vehicle(plant, dealer, veh_type, day, data)
@@ -820,581 +842,27 @@ def inventory_balance_repair(partial: SolutionState, rng: rnd.Generator):
                 continue
             value = veh_loading(state, vehicle, orders)
             if value:
-                for sku_id in orders:
-                    unsatisfied[(dealer, sku_id)] -= vehicle.cargo.get((sku_id, day), 0)
+                for sku_id in list(orders.keys()):
+                    unsatisfied[(dealer, sku_id)] = max(0, unsatisfied[(dealer, sku_id)] - vehicle.cargo.get((sku_id, day), 0))
     print(f"[OPLOG] inventory_balance_repair: {time.time() - t0:.4f}s")
     return state
 
-def urgency_repair(partial: SolutionState, rng: rnd.Generator):
-    """
-    基于紧急程度的修复算子
-    综合考虑多个因素计算订单紧急程度
-    """
-    t0 = time.time()
-    print(f"[OPLOG] 开始执行 urgency_repair 算子")
-    state = partial
-    data = state.data
-    shipped = state.compute_shipped()
-    unsatisfied = {}
-    for (dealer, sku_id), demand in data.demands.items():
-        shipped_qty = shipped.get((dealer, sku_id), 0)
-        if shipped_qty < demand and demand > 0:
-            unmet_ratio = (demand - shipped_qty) / demand
-            total_available = 0
-            supply_chain = data.construct_supply_chain()
-            for plant in [plant for (plant, dealer_key), skus in supply_chain.items() 
-                          if dealer_key == dealer and sku_id in skus]:
-                for day in range(1, data.horizons + 1):
-                    total_available += state.s_ikt.get((plant, sku_id, day - 1), 0) + \
-                        data.sku_prod_each_day.get((plant, sku_id, day), 0)
-            inventory_urgency = 1.0
-            if total_available > 0:
-                inventory_urgency = min(1.0, (demand - shipped_qty) / total_available)
-            urgency = 0.8 * unmet_ratio + 0.2 * inventory_urgency
-            unsatisfied[(dealer, sku_id)] = (demand - shipped_qty, urgency)
-    sorted_demands = sorted(unsatisfied.items(), key=lambda x: x[1][1], reverse=True)
-    for (dealer, sku_id), (unmet_demand, _) in sorted_demands:
-        available_plants = []
-        supply_chain = data.construct_supply_chain()
-        for plant in [plant for (plant, dealer_key), skus in supply_chain.items() 
-                     if dealer_key == dealer and sku_id in skus]:
-            for day in range(1, data.horizons + 1):
-                current_stock = state.s_ikt.get((plant, sku_id, day - 1), 0) + \
-                    data.sku_prod_each_day.get((plant, sku_id, day), 0)
-                available_plants.append((plant, current_stock))
-        available_plants.sort(key=lambda x: x[1], reverse=True)
-        if not available_plants:
-            continue
-        plant = available_plants[0][0]
-        veh_types = sorted(list(data.all_veh_types), 
-                         key=lambda x: data.veh_type_cap[x],
-                         reverse=True)
-        for veh_type in veh_types:
-            day = rng.choice(range(1, data.horizons + 1))
-            vehicle = Vehicle(plant, dealer, veh_type, day, data)
-            orders = {sku_id: unmet_demand}
-            value = veh_loading(state, vehicle, orders)
-            if value:
-                break
-    print(f"[OPLOG] urgency_repair: {time.time() - t0:.4f}s")
-    return state
-
+# urgency_repair 已与 greedy_repair 合并并移除，避免冗余实现
 
 def infeasible_repair(partial: SolutionState, rng: rnd.Generator):
     """
-    修复不可行解, 找出当前周期 t 结束时, 库存数量为负的SKU对应的车辆, 进行修复
-    增加最大迭代次数保护, 防止死循环。
+    旧的 infeasible_repair 已弃用，现使用 destroy_operators.infeasible_removal。
+    保留该占位函数以兼容调用，但直接调用 infeasible_removal。
     """
-    t0 = time.time()
-    print(f"[OPLOG] 开始执行 infeasible_repair 算子")
-    state = partial
-    data = state.data
-    neg_inv = {k: v for k, v in state.s_ikt.items() if v < 0}
-    while neg_inv:
-        for veh in state.vehicles[:]:
-            for (plant, sku_id, day), inv in list(neg_inv.items()):
-                if veh.fact_id == plant and veh.day == day and (sku_id, day) in veh.cargo:
-                    qty = veh.cargo[(sku_id, day)]
-                    decrease_qty = min(qty, -inv)
-                    veh.cargo[(sku_id, day)] -= decrease_qty
-                    if veh.cargo[(sku_id, day)] == 0:
-                        del veh.cargo[(sku_id, day)]
-                    if veh.is_empty():
-                        state.vehicles.remove(veh)
-                    state.s_ikt[plant, sku_id, day] += decrease_qty
-                    neg_inv[plant, sku_id, day] += decrease_qty
-                    if neg_inv[plant, sku_id, day] >= 0:
-                        del neg_inv[plant, sku_id, day]
-                    break
-            if not neg_inv:
-                break
-    state.compute_inventory()
-    print(f"[OPLOG] infeasible_repair: {time.time() - t0:.4f}s")
-    return state
+    print("[OPLOG] 使用外部 infeasible_removal 修复不可行解")
+    return infeasible_removal(partial, rng)
 
-
-def _construct_training_data(partial: SolutionState, improvement: float):
-    """
-    人为构建特征和标签数据, 当tracker中没有任何数据时, 
-    learning_based_repair算子会随机选择一种修复算子,
-    因此, 如果遇到这种情况, 就调用该函数构建数据,
-    这些数据可以帮助模型在初始阶段进行学习
-    
-    注意, 这个函数仅适用于tracker中没有任何数据的情况
-    如果tracker中已经有数据, 则需要用实际数据替换特征值
-    
-    Parameters:
-    -----------
-    state : SolutionState
-        当前解状态, 包含tracker引用
-    improvement : float
-        当前解相对于上一个解的目标函数改进值
-    """
-    state = partial
-    data = state.data
-    
-    avg_demand = np.mean(list(data.demands.values())) if data.demands else 1.0
-    avg_sku_size = np.mean([data.sku_sizes[sku] for sku in data.all_skus]) if data.all_skus else 1.0
-    
-    periods = list(range(1, data.horizons + 1))
-    # avg_day 是数组periods中位于中间位置的元素
-    avg_day = float(periods[len(periods) // 2]) if periods else 1.0
-    
-    avg_inventory = np.mean([inv for (plant, sku_id, day), inv in state.s_ikt.items() if day == avg_day-1]) if state.s_ikt else 1.0
-    avg_capacity_util = float(rnd.uniform(0, 1))
-    
-    feature = [
-        avg_demand,
-        avg_sku_size,
-        avg_day,
-        avg_inventory,
-        avg_capacity_util
-    ]
-    
-    # 这里不需要提前对特征进行标准化处理, 因为可能会破坏数据的一致性
-
-    feat_length, label_length = state.tracker.update_ml_data(feature, improvement)
-    print(f"构建的特征数据: {feature}")
-    print(f"构建训练数据: 特征长度 {feat_length}, 标签长度 {label_length}, 目标函数改进 {improvement:.4f}")
-
-
-def _call_greedy_repair(partial: SolutionState, rng: rnd.Generator):
-    """
-    调用贪心修复算子, 并计算目标函数改进值, 仅用于learning_based_repair算子中
-    """
-    state = partial
-    
-    prev_obj = state.objective()
-    new_state = greedy_repair(state, rng)
-    new_obj = new_state.objective()
-    
-    # 计算目标函数改进值 (prev - new, 正值表示改进)
-    improvement = prev_obj - new_obj
-    
-    # 处理无穷大情况，避免nan
-    if math.isnan(improvement):
-        # 如果两者都是inf，改进为0
-        improvement = 0.0
-    elif math.isinf(improvement):
-        # 如果是inf，可能是prev是inf且new是有限值，设为一个大的正值
-        improvement = 1e6 if improvement > 0 else -1e6
-    
-    return new_state, improvement
-
-
-def _random_select_repair_operator(partial: SolutionState, rng: rnd.Generator):
-    """
-    随机选择一种修复算子进行调用, 并计算目标函数改进值, 仅用于learning_based_repair算子中
-    """
-    state = partial
-    
-    # 定义可用的修复算子列表
-    REPAIR_OPERATORS = [
-        greedy_repair,
-        local_search_repair,
-        inventory_balance_repair,
-        urgency_repair,
-        infeasible_repair,
-        smart_batch_repair
-    ]
-    
-    operator = rng.choice(REPAIR_OPERATORS)  # 随机选择一种修复算子
-    print(f"[OPLOG] 随机选择修复算子: {operator.__name__}")
-    
-    prev_obj = state.objective()            # 计算调用前的目标函数值
-    new_state = operator(state, rng)
-    new_obj = new_state.objective()        # 计算调用后的目标函数值
-    
-    improvement = prev_obj - new_obj        # 计算目标函数改进值 (prev - new, 正值表示改进)
-    
-    # 处理无穷大情况，避免nan
-    if math.isnan(improvement):
-        # 如果两者都是inf，改进为0
-        improvement = 0.0
-    elif math.isinf(improvement):
-        # 如果是inf，可能是prev是inf且new是有限值，设为一个大的正值
-        improvement = 1e6 if improvement > 0 else -1e6
-    
-    return new_state, improvement
-
-
-def _compute_feature(state: SolutionState) -> List[float]:
-    """
-    当learning_based_repair随机调用一种修复算子, 并且tracker中已经有数据时,
-    需要使用实际的数据作为特征值, 而不是人为构建
-    因此, 需要计算当前解的特征向量, 作为训练数据
-    
-    特征向量: [avg_demand, avg_sku_size, avg_day, avg_inventory, avg_capacity_util]
-    基于未满足需求的实际统计数据计算
-    """
-    data = state.data
-    
-    # 获取未满足需求
-    removal_list = get_removal_list(state)
-    
-    if not removal_list:
-        # 如果没有未满足需求，返回默认特征
-        return [0.0, 0.0, 1.0, 0.0, 0.0]
-    
-    # 初始化累加器
-    total_demand = 0.0
-    total_weighted_size = 0.0
-    total_quantity = 0
-    inventory_values = []
-    
-    # 对每个未满足需求，计算对特征的贡献
-    for (dealer, sku_id), unmet_qty in removal_list.items():
-        demand = data.demands.get((dealer, sku_id), 0)
-        sku_size = data.sku_sizes[sku_id]
-
-        total_demand += demand
-        total_weighted_size += sku_size * unmet_qty
-        total_quantity += unmet_qty
-        
-        # 获取相关工厂/SKU组合的库存水平
-        supply_chain = state.data.construct_supply_chain()
-        available_plants = [plant for (plant, dealer_key), skus in supply_chain.items() 
-                           if dealer_key == dealer and sku_id in skus]
-        
-        for plant in available_plants:
-            for day in range(1, data.horizons + 1):
-                inv = state.s_ikt.get((plant, sku_id, day-1), 0)
-                inventory_values.append(inv)
-    
-    # 计算平均特征
-    num_demands = len(removal_list)
-    avg_demand = total_demand / num_demands if num_demands > 0 else 0.0
-    
-    avg_size = total_weighted_size / total_quantity if total_quantity > 0 else 0.0
-    
-    periods = list(range(1, data.horizons + 1))
-    # avg_day 是数组periods中位于中间位置的元素
-    avg_day = float(periods[len(periods) // 2]) if periods else 1.0
-    
-    avg_inventory = np.mean(inventory_values) if inventory_values else 0.0
-    
-    # 计算当前解中所有车辆的平均容量利用率
-    capacity_utils = []
-    for veh in state.vehicles:
-        used_capacity = state.compute_veh_load(veh)
-        total_capacity = data.veh_type_cap[veh.type]
-        if total_capacity > 0:
-            capacity_util = used_capacity / total_capacity
-            capacity_utils.append(capacity_util)
-
-    avg_capacity_util = np.mean(capacity_utils) if capacity_utils else 0.0
-    
-    # 将特征值显式转换为 Python 的原生 float 类型, 避免潜在的类型不一致问题
-    # 这里不需要提前对特征进行标准化处理, 因为可能会破坏数据的一致性
-    feature = [float(avg_demand), float(avg_size), float(avg_day), float(avg_inventory), float(avg_capacity_util)]
-    
-    print(f"[OPLOG] 计算的实际特征: {feature}")
-    return feature
-
-def learning_based_repair(partial: SolutionState, rng: rnd.Generator,
-                          model_type: str='adaptive', min_score: float=0.4,
-                          initial_sample_size: int=20, adaptive_sample_size: int=100,
-                          retrain_interval: int=80) -> SolutionState:
-    """
-    基于学习的修复算子: 使用ML从迭代历史学习最佳插入规则
-    核心是训练模型预测插入位置的"好坏" (基于目标函数改进)
-    引入ML元素以提升创新性 (论文可作为贡献点)
-    
-    当样本数据量不足时, 从其它6种修复算子中随机选择一种,
-    并记录该次修复的特征和目标函数改进值, 作为训练数据
-    这样可以逐步积累训练数据, 进入ML预测阶段
-    
-    同时避免了单一的修复策略, 提升数据多样性
-    
-    Parameters:
-    -----------
-    state : SolutionState
-        当前解状态, 包含tracker引用
-    rng : rnd.Generator  
-        随机数生成器
-    model_type : str
-        模型类型：'linear'(Ridge), 'random_forest'(RandomForest), 'adaptive'(自动选择两种之一)
-    min_score : float
-        最小可接受预测分数阈值
-    initial_sample_size : int
-        初始训练样本量阈值 (进入ML预测阶段的条件, 值越小越早进入ML阶段)
-    adaptive_sample_size : int
-        自适应训练样本量阈值 (采取自适应策略时, 如果数据量低于该数值, 则使用线性拟合, 否则使用随机森林)
-    retrain_interval : int
-        模型重训练间隔 (迭代次数)
-    """
-    t0 = time.time()
-    print(f"[OPLOG] 开始执行 learning_based_repair 算子")
-    state = partial
-    data = state.data
-    
-    
-    # step 1: 检查tracker可用性，无tracker时fallback到greedy
-    if state.tracker is None:  # 不存在tracker引用, 只调用greedy修复, 不需要保存训练数据
-        print(f"[OPLOG] 无tracker引用, fallback到greedy修复")
-        new_state, improvement = _call_greedy_repair(state, rng)
-        return new_state
-    
-    tracker_stats = state.tracker.get_statistics()
-    features_data = state.tracker.features
-    labels_data = state.tracker.labels
-    current_iteration = tracker_stats['total_iterations']
-    
-    # 当tracker中没有保存任何训练数据时, 该算子会随机选择一种修复算子
-    # 但是由于缺少样本数据, 无法进入ML预测阶段
-    # 因此, 需要人为构建特征和标签数据
-    if not features_data or not labels_data:
-        print(f"[OPLOG] 正在构建特征和标签数据 ...")
-        print(f"[OPLOG] tracker中无数据, 随机选择一种修复算子 ...")
-        new_state, improvement = _random_select_repair_operator(state, rng)
-        _construct_training_data(new_state, improvement)
-        return new_state
-        
-    
-    # 初始阶段数据不足时, 随机选择一种修复算子
-    if len(labels_data) < initial_sample_size:
-        print(f"[OPLOG] 数据量不足 {len(labels_data)} < {initial_sample_size}, 随机选择一种修复算子 ...")
-        new_state, improvement = _random_select_repair_operator(state, rng)
-        
-        # 使用实际数据作为特征值, 而不是人为构建
-        # 注意, 这里需要使用new_state而不是state
-        feature = _compute_feature(new_state)
-        
-        feat_length, label_length = state.tracker.update_ml_data(feature, improvement)
-        print(f"[OPLOG] 已保存实际训练数据: 特征值长度={feat_length}, 标签长度={label_length}, 改进={improvement:.4f}")
-        
-        return new_state
-    
-    # step 2: 检查是否需要重训练模型
-    # 使用tracker存储上次训练信息，避免频繁重新训练
-    need_retrain = True
-    model = None
-    scaler = None
-    
-    # 检查tracker中是否有缓存的模型和上次训练迭代数
-    if state.tracker.has_cached_model():
-        cached_model, cached_scaler, last_train_iter = state.tracker.get_cached_model()
-        if current_iteration - last_train_iter < retrain_interval:
-            # 距离上次训练未达到间隔, 使用缓存模型
-            need_retrain = False
-            model = cached_model
-            scaler = cached_scaler
-            print(f"[OPLOG] 使用缓存模型, 距离上次训练 {current_iteration - last_train_iter} 迭代")
-        else:
-            print(f"[OPLOG] 缓存模型过期 ({current_iteration - last_train_iter} > {retrain_interval}), 需要重新训练")
-    else:
-        print("[OPLOG] 无缓存模型，开始首次训练")
-    
-    # step 3: 根据 model_type 参数选择模型进行训练   
-    if need_retrain:
-        try:
-            X = np.array(features_data)
-            y = np.array(labels_data)
-            
-            # 特征标准化
-            scaler = StandardScaler()
-            X_scaled = scaler.fit_transform(X)
-            
-            # 根据model_type参数选择模型
-            if model_type == 'linear':
-                # 岭回归模型
-                model = Ridge(alpha=1.0, random_state=rng.integers(0, 1000))
-                print(f"[OPLOG] 使用指定的Ridge模型")
-            
-            elif model_type == 'random_forest':
-                # 大数据集使用随机森林
-                model = RandomForestRegressor(
-                    n_estimators=50,  # 减少树数量提升速度
-                    max_depth=10,     # 限制树深防止过拟合
-                    random_state=rng.integers(0, 1000),
-                    n_jobs=1          # 单线程避免并发问题
-                )
-                print(f"[OPLOG] 使用指定的随机森林模型")
-            
-            elif model_type == 'adaptive':
-                # 自动根据数据量选择模型
-                if len(X) < adaptive_sample_size:
-                    model = Ridge(alpha=1.0, random_state=rng.integers(0, 1000))
-                    print(f"[OPLOG] 自适应选择Ridge模型 (数据量: {len(X)})")
-                else:
-                    model = RandomForestRegressor(
-                        n_estimators=50,
-                        max_depth=10,
-                        random_state=rng.integers(0, 1000),
-                        n_jobs=1
-                    )
-                    print(f"[OPLOG] 自适应选择随机森林模型 (数据量: {len(X)})")
-            
-            else:
-                # 未知模型类型，fallback到自适应
-                print(f"[OPLOG] 未知模型类型 '{model_type}'，使用自适应模式")
-                model = Ridge(alpha=1.0, random_state=rng.integers(0, 1000)) if len(X) < adaptive_sample_size else RandomForestRegressor(n_estimators=50, max_depth=10, random_state=rng.integers(0, 1000), n_jobs=1)
-                
-            # 训练模型
-            model.fit(X_scaled, y)
-            
-            # 缓存模型和相关信息
-            state.tracker.cache_ml_model(model, scaler, current_iteration)
-            print(f"[OPLOG] 模型训练完成, 已缓存到tracker")
-        
-        except Exception as e:  # 捕获所有异常
-            print(f"[OPLOG] 模型训练失败 ({type(e).__name__}), fallback到greedy修复 ...")
-            new_state, improvement = _call_greedy_repair(state, rng)
-            feature = _compute_feature(new_state)
-            feat_length, label_length = state.tracker.update_ml_data(feature, improvement)
-            print(f"[OPLOG] 已保存实际训练数据: 特征值长度={feat_length}, 标签长度={label_length}, 改进={improvement:.4f}")
-            return new_state
-    
-    # step 4: 获取待插入的未满足需求
-    removal_list = get_removal_list(state)
-    if not removal_list:
-        print(f"[OPLOG] 无未满足需求, 直接返回当前解")
-        return state
-    
-    # step 5: 为每个待插入需求生成候选并预测分数
-    total_predictions = 0
-    successful_insertions = 0
-    failed_demands = []  # 记录ML插入失败的需求
-    
-    for (dealer, sku_id), remain_qty in removal_list.items():
-        candidates = []
-        
-        # 生成候选插入位置
-        supply_chain = data.construct_supply_chain()
-        available_plants = [plant for (plant, dealer_key), skus in supply_chain.items() 
-                           if dealer_key == dealer and sku_id in skus]
-        
-        for plant in available_plants:
-            for day in range(1, data.horizons + 1):
-                for veh_type in data.all_veh_types:
-                    try:
-                        # 提取特征向量
-                        demand = data.demands.get((dealer, sku_id), 0)
-                        sku_size = data.sku_sizes[sku_id] * remain_qty
-                        inventory = state.s_ikt.get((plant, sku_id, day-1), 0)
-                        veh_capacity = data.veh_type_cap[veh_type]
-                        capacity_util = sku_size / veh_capacity if veh_capacity > 0 else 0
-                        
-                        # 构建特征向量[demand, sku_size, day, inventory, capacity_util]
-                        feature_vector = np.array([[demand, sku_size, day, inventory, capacity_util]])
-                        feature_scaled = scaler.transform(feature_vector)
-                        
-                        # 预测插入质量分数
-                        pred_score = model.predict(feature_scaled)[0]
-                        total_predictions += 1
-                        
-                        # 只保留高质量候选
-                        if pred_score >= min_score:
-                            candidates.append((plant, veh_type, day, pred_score, feature_vector[0]))
-
-                    except Exception as e:
-                        continue  # 跳过异常候选
-        
-        # step 6: 选择最佳候选进行插入
-        if candidates:
-            # 按预测分数降序排序
-            candidates.sort(key=lambda x: x[3], reverse=True)
-            
-            for plant, veh_type, day, pred_score, raw_feature in candidates:
-                try:
-                    # 尝试插入
-                    veh = Vehicle(plant, dealer, veh_type, day, data)
-                    orders = {sku_id: remain_qty}
-                    
-                    # 记录插入前的目标函数值
-                    prev_obj = state.objective()
-                    
-                    # 执行插入
-                    success = veh_loading(state, veh, orders)
-                    if success and veh.cargo:
-                        state.vehicles.append(veh)
-                        state.compute_inventory()
-                        
-                        # 计算实际改进并更新tracker
-                        new_obj = state.objective()
-                        
-                        # 计算实际改进值, 正值表示改进
-                        actual_improvement = prev_obj - new_obj
-                        
-                        if math.isnan(actual_improvement):
-                            # 如果两者都是inf，实际改进为0
-                            actual_improvement = 0.0
-                        elif math.isinf(actual_improvement):
-                            # 如果是inf，可能是prev_obj和new_obj这两者中, 一个是inf, 另一个是有限值
-                            actual_improvement = 1e6 if actual_improvement > 0 else -1e6
-                        
-                        # 更新ML训练数据
-                        state.tracker.update_ml_data(raw_feature.tolist(), actual_improvement)
-                        successful_insertions += 1
-                        
-                        break  # 成功插入, 处理下一个需求
-                
-                except Exception as e:
-                    continue  # 插入失败, 尝试下一个候选
-            
-        # 如果所有候选都失败, 记录失败需求
-        if not candidates or remain_qty > 0:
-            failed_demands.append((dealer, sku_id))
-    
-    # step 7: 如果有ML插入失败的需求，使用greedy一次性修复所有
-    # 因为greedy修复会尝试插入所有未满足需求
-    if failed_demands:
-        print(f"[OPLOG] {len(failed_demands)} 个需求ML插入失败, 使用greedy修复")
-        prev_obj = state.objective()
-        new_state = greedy_repair(state, rng)
-        new_obj = new_state.objective()
-        improvement = prev_obj - new_obj
-        
-        # 处理边界情况, 防止改进值为inf或nan
-        if math.isnan(improvement):
-            improvement = 0.0
-        elif math.isinf(improvement):
-            improvement = 1e6 if improvement > 0 else -1e6
-        
-        # 使用实际特征数据而不是手动构建, 注意这里需要使用new_state
-        feature = _compute_feature(new_state)
-        feat_length, label_length = state.tracker.update_ml_data(feature, improvement)
-        print(f"[OPLOG] 已保存greedy修复的实际训练数据: 特征值长度={feat_length}, 标签长度={label_length}, 改进={improvement:.4f}")
-        state = new_state
-
-    state.compute_inventory()
-    
-    print(f"[OPLOG] ML修复完成: {total_predictions}次预测, {successful_insertions}次成功插入, {len(failed_demands)}个需求使用greedy修复")
-    
-    elapsed = time.time() - t0
-    print(f"[OPLOG] learning_based_repair: {elapsed:.4f}s")
-    return state
-
-
-class LearningBasedRepairOperator:
-    """
-    带参数的基于学习的修复算子包装类
-    """
-    def __init__(self, model_type: str='adaptive', 
-                 min_score: float=0.4, 
-                 initial_sample_size: int=20,
-                 adaptive_sample_size: int=100,
-                 retrain_interval: int=80):
-        
-        self.model_type = model_type
-        self.min_score = min_score
-        self.initial_sample_size = initial_sample_size
-        self.adaptive_sample_size = adaptive_sample_size
-        self.retrain_interval = retrain_interval
-        self.__name__ = "learning_based_repair"
-        
-        # 验证参数有效性
-        valid_models = ['linear', 'random_forest', 'adaptive']
-        if model_type not in valid_models:
-            print(f"[WARNING] 无效的model_type '{model_type}', 使用默认值 'adaptive'")
-            self.model_type = 'adaptive'
-        
-        if retrain_interval < 10:
-            print(f"[WARNING] retrain_interval过小 ({retrain_interval}), 设置为最小值 10")
-            self.retrain_interval = 10
-
-    def __call__(self, current: SolutionState, rng: rnd.Generator):
-        return learning_based_repair(current, rng, self.model_type, self.min_score, self.initial_sample_size, self.adaptive_sample_size, self.retrain_interval)
+def _construct_resource_availability(state: SolutionState, plant: str, sku_id: str, day: int):
+    """返回在指定 (plant,sku,day) 的可用库存数量 (不修改 state)"""
+    prev_inv = state.s_ikt.get((plant, sku_id, day - 1), 0)
+    production = state.data.sku_prod_each_day.get((plant, sku_id, day), 0)
+    used_inv = sum(veh.cargo.get((sku_id, day), 0) for veh in state.vehicles if veh.fact_id == plant and veh.day == day)
+    return max(0, prev_inv + production - used_inv)
 
 def get_removal_list(state: SolutionState) -> Dict[Tuple[str, str], int]:
     """
@@ -1416,7 +884,6 @@ def get_removal_list(state: SolutionState) -> Dict[Tuple[str, str], int]:
             removal_list[(dealer, sku_id)] = unmet_qty
     
     return removal_list
-
 
 def smart_batch_repair(partial: SolutionState, rng: rnd.Generator):
     """
@@ -1485,7 +952,6 @@ def smart_batch_repair(partial: SolutionState, rng: rnd.Generator):
     print(f"[OPLOG] Smart Batch Repair 完成: {elapsed:.4f}s")
     return state
 
-
 def _compute_resource_pool(state: SolutionState, data: DataALNS):
     """预计算所有可用资源, 避免重复计算"""
     state.compute_inventory()
@@ -1507,7 +973,6 @@ def _compute_resource_pool(state: SolutionState, data: DataALNS):
     
     return resource_pool
 
-
 def _get_unsatisfied_demands(state: SolutionState, data: DataALNS):
     """获取当前未满足的需求列表"""
     shipped = state.compute_shipped()
@@ -1525,7 +990,6 @@ def _get_unsatisfied_demands(state: SolutionState, data: DataALNS):
             })
     
     return unsatisfied
-
 
 def _create_smart_batches(unsatisfied_demands, data: DataALNS, batch_size: int):
     """
@@ -1545,7 +1009,6 @@ def _create_smart_batches(unsatisfied_demands, data: DataALNS, batch_size: int):
         batches.append(batch)
     
     return batches
-
 
 def _process_demand_batch(state: SolutionState, batch, resource_pool, data: DataALNS, rng: rnd.Generator):
     """处理单个需求批次"""
@@ -1597,7 +1060,6 @@ def _process_demand_batch(state: SolutionState, batch, resource_pool, data: Data
     
     return batch_progress
 
-
 def _find_best_allocation(remain_demand, sku_id, available_plants, resource_pool, data: DataALNS):
     """找到最优的资源分配方案"""
     best_score = -1
@@ -1620,7 +1082,6 @@ def _find_best_allocation(remain_demand, sku_id, available_plants, resource_pool
     
     return best_allocation
 
-
 def _select_optimal_vehicle_type(demand_qty, sku_id, data: DataALNS):
     """根据需求量智能选择车型"""
     required_volume = demand_qty * data.sku_sizes[sku_id]
@@ -1635,7 +1096,6 @@ def _select_optimal_vehicle_type(demand_qty, sku_id, data: DataALNS):
     else:
         # 如果没有车型能完全满足, 选择最大的车型
         return max(data.veh_type_cap.keys(), key=lambda x: data.veh_type_cap[x])
-
 
 def _force_load_remaining_demands(state: SolutionState, data: DataALNS):
     """最终强制装载, 确保所有需求得到满足"""
@@ -1673,3 +1133,169 @@ def _force_load_remaining_demands(state: SolutionState, data: DataALNS):
             print(f"[OPLOG] 强制装载失败 {dealer}-{sku_id}: {e}")
     
     print(f"[OPLOG] 强制装载完成, 处理 {force_loaded} 个需求")
+
+def regret_based_repair(partial: SolutionState, rng: rnd.Generator, k: int = 2, topN: int = 6, time_limit: float = 10.0):
+    """
+    后悔值修复算子（regret-k style）
+    核心思想：对于每个未满足需求，评估若干候选插入位置的改进值，
+    计算 top1 与 topk 之间的差值（regret），优先修复后悔值最大的需求。
+    实现要点：
+    - 在临时副本（state.copy()）上模拟插入以评估改进，不修改主 state，直到确认 commit。
+    - 限制每个需求评估的候选数 topN 以控制开销。
+    """
+    t0 = time.time()
+    print(f"[OPLOG] 开始执行 regret_based_repair 算子")
+    state = partial
+    data = state.data
+    start = time.time()
+
+    while time.time() - start < time_limit:
+        removal = get_removal_list(state)
+        if not removal:
+            break
+        prev_obj = state.objective()
+        regret_list = []
+
+        # 遍历每个未满足需求，评估若干候选
+        for (dealer, sku_id), remain_qty in list(removal.items()):
+            candidates_scores = []
+            # 获取可用工厂
+            supply_chain = data.construct_supply_chain()
+            available_plants = [plant for (plant, dealer_key), skus in supply_chain.items() if dealer_key == dealer and sku_id in skus]
+            # 限制候选数
+            for plant in available_plants:
+                for day in range(1, data.horizons + 1):
+                    for veh_type in data.all_veh_types:
+                        # 估算该候选最大可装量
+                        available = _construct_resource_availability(state, plant, sku_id, day)
+                        if available <= 0:
+                            continue
+                        cap = data.veh_type_cap[veh_type]
+                        max_qty_by_cap = int(cap // data.sku_sizes[sku_id]) if data.sku_sizes[sku_id] > 0 else 0
+                        est_qty = min(remain_qty, available, max_qty_by_cap)
+                        if est_qty <= 0:
+                            continue
+                        # 在临时副本上模拟插入并评估改进
+                        tmp = state.copy()
+                        veh = Vehicle(plant, dealer, veh_type, day, data)
+                        veh_loading(tmp, veh, {sku_id: est_qty})
+                        new_obj = tmp.objective()
+                        improvement = prev_obj - new_obj
+                        candidates_scores.append((improvement, (plant, veh_type, day, est_qty)))
+                        # 限制总候选数 per demand
+                        if len(candidates_scores) >= topN:
+                            break
+                    if len(candidates_scores) >= topN:
+                        break
+                if len(candidates_scores) >= topN:
+                    break
+
+            if not candidates_scores:
+                continue
+            candidates_scores.sort(key=lambda x: x[0], reverse=True)
+            top1 = candidates_scores[0][0]
+            topk = candidates_scores[min(k-1, len(candidates_scores)-1)][0]
+            regret = top1 - topk
+            regret_list.append(((dealer, sku_id), regret, candidates_scores[0][1]))  # 保存 top1 的候选方案
+
+        if not regret_list:
+            break
+
+        # 选择具有最大 regret 的需求并在主 state 上应用 top1 插入
+        regret_list.sort(key=lambda x: x[1], reverse=True)
+        (dealer_sel, sku_sel), _, best_candidate = regret_list[0]
+        plant_sel, veh_type_sel, day_sel, qty_sel = best_candidate
+
+        # 在主 state 上执行插入
+        vehicle = Vehicle(plant_sel, dealer_sel, veh_type_sel, day_sel, data)
+        orders = {sku_sel: qty_sel}
+        veh_loading(state, vehicle, orders)
+        # veh_loading 已在 commit 模式下将 vehicle append 到 state.vehicles 并更新库存
+
+    state.compute_inventory()
+    elapsed = time.time() - t0
+    print(f"[OPLOG] regret_based_repair 完成: {elapsed:.4f}s")
+    return state
+
+class RegretBasedRepairOperator:
+    def __init__(self, k: int = 2, topN: int = 6, time_limit: float = 10.0):
+        self.k = k
+        self.topN = topN
+        self.time_limit = time_limit
+        self.__name__ = "regret_based_repair"
+
+    def __call__(self, current: SolutionState, rng: rnd.Generator):
+        return regret_based_repair(current, rng, self.k, self.topN, self.time_limit)
+
+# 以下为原始文件中与 learning_based_repair 关联的内容已移除
+# 移除：_construct_training_data, _call_greedy_repair, _random_select_repair_operator, _compute_feature,
+# learning_based_repair 以及 LearningBasedRepairOperator
+# 这些逻辑已迁移到外部 ML operator selector (ALNSCode/ml_operator_selector.py) 中
+
+def _compute_feature(state: SolutionState) -> List[float]:
+    """
+    当需要计算当前解的特征向量时使用的实用函数（保留用于外部 tracker）
+    特征向量: [avg_demand, avg_sku_size, avg_day, avg_inventory, avg_capacity_util]
+    """
+    data = state.data
+    
+    # 获取未满足需求
+    removal_list = get_removal_list(state)
+    
+    if not removal_list:
+        return [0.0, 0.0, 1.0, 0.0, 0.0]
+    
+    # 初始化累加器
+    total_demand = 0.0
+    total_weighted_size = 0.0
+    total_quantity = 0
+    inventory_values = []
+    
+    # 对每个未满足需求，计算对特征的贡献
+    for (dealer, sku_id), unmet_qty in removal_list.items():
+        demand = data.demands.get((dealer, sku_id), 0)
+        sku_size = data.sku_sizes[sku_id]
+
+        total_demand += demand
+        total_weighted_size += sku_size * unmet_qty
+        total_quantity += unmet_qty
+        
+        # 获取相关工厂/SKU组合的库存水平
+        supply_chain = state.data.construct_supply_chain()
+        available_plants = [plant for (plant, dealer_key), skus in supply_chain.items() 
+                           if dealer_key == dealer and sku_id in skus]
+        
+        for plant in available_plants:
+            for day in range(1, data.horizons + 1):
+                inv = state.s_ikt.get((plant, sku_id, day-1), 0)
+                inventory_values.append(inv)
+    
+    # 计算平均特征
+    num_demands = len(removal_list)
+    avg_demand = total_demand / num_demands if num_demands > 0 else 0.0
+    
+    avg_size = total_weighted_size / total_quantity if total_quantity > 0 else 0.0
+    
+    periods = list(range(1, data.horizons + 1))
+    # avg_day 是数组periods中位于中间位置的元素
+    avg_day = float(periods[len(periods) // 2]) if periods else 1.0
+    
+    avg_inventory = np.mean(inventory_values) if inventory_values else 0.0
+    
+    # 计算当前解中所有车辆的平均容量利用率
+    capacity_utils = []
+    for veh in state.vehicles:
+        used_capacity = state.compute_veh_load(veh)
+        total_capacity = data.veh_type_cap[veh.type]
+        if total_capacity > 0:
+            capacity_util = used_capacity / total_capacity
+            capacity_utils.append(capacity_util)
+
+    avg_capacity_util = np.mean(capacity_utils) if capacity_utils else 0.0
+    
+    feature = [float(avg_demand), float(avg_size), float(avg_day), float(avg_inventory), float(avg_capacity_util)]
+    
+    print(f"[OPLOG] 计算的实际特征: {feature}")
+    return feature
+
+# 其余辅助函数保持不变（如 _compute_resource_pool, _find_best_allocation 等），在上方已保留

@@ -5,7 +5,7 @@ import pytest
 
 from ALNSCode.InputDataALNS import DataALNS
 from ALNSCode.visualization import plot_supply_chain_network_3d_enhanced
-from ALNSCode.alns_config import ALNSConfig
+from ALNSCode.alns_config import default_config as ALNSConfig
 
 # --- 配置 ---
 # 从配置文件中读取数据集类型，并指定一个用于测试的数据集索引

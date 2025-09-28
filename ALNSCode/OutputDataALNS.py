@@ -1,18 +1,36 @@
-import os
-import json
-import pandas as pd
-from collections import defaultdict
-from dataclasses import dataclass, field
-from typing import List, Dict, Tuple, Set, Optional
-import logging
+"""
+OutputDataALNS
 
-# 设置日志
-logging.basicConfig(level=logging.INFO)
+模块定位
+    读取 ALNS 输出 CSV（opt_result/opt_details/opt_summary/non_fulfill/sku_inv_left），
+    统一重命名列、类型转换，构建用于快速查询的字典索引，并提供数据一致性校验与汇总统计。
+"""
+
+# =========================
+# 标准库
+# =========================
+import os
+import logging
+from dataclasses import dataclass, field
+from typing import Dict, Tuple, Optional
+
+# =========================
+# 第三方库
+# =========================
+import pandas as pd
+
+# 设置日志（建议在主程序统一配置 logging，这里仅获取模块级 logger）
 logger = logging.getLogger(__name__)
 
 
 @dataclass
 class OutPutData:
+    """输出结果数据访问与校验封装：
+    - 通过 load() 读取并标准化各 CSV
+    - 通过 _generate_indexes() 生成字典索引以便快速查询
+    - 通过 _validate_data() 做基础一致性检查
+    - 提供 get_summary_stats() 输出摘要统计
+    """
     input_file_loc: str
     dataset_name: str
     
@@ -135,7 +153,7 @@ class OutPutData:
         
         return df
     
-    def load(self):
+    def load(self) -> None:
         """
         加载所有输出数据文件
         """
@@ -143,8 +161,19 @@ class OutPutData:
         
         # 构建数据集目录路径
         dataset_path = os.path.join(self.input_file_loc, self.dataset_name)
+        # 目录存在性检查：缺失则后续读取将返回空表
+        if not os.path.isdir(dataset_path):
+            logger.warning(f"数据集目录不存在: {dataset_path}")
         
         # 定义文件配置
+        # - title_map: 原始 CSV 列名 -> 统一内部字段名
+        # - dtype_map: 目标数据类型（int/float/str）
+        # 各表语义：
+        #   result:  明细发运记录（件数/数量）
+        #   details: 明细+尺寸/容量等指标（便于核对单位）
+        #   summary: 按车辆聚合的占用体积/最小起运量等
+        #   non_fulfill:  未满足需求量
+        #   sku_inv_left: 每日剩余库存（单位需与检查逻辑一致）
         file_configs = {
             'result': {
                 'filename': 'opt_result.csv',
@@ -235,8 +264,14 @@ class OutPutData:
         
         logger.info("数据加载完成")
     
-    def _generate_indexes(self):
-        """生成用于快速查询的字典索引"""
+    def _generate_indexes(self) -> None:
+        """生成用于快速查询的字典索引
+        构造的字典键与含义：
+        - order_fulfill[(day, fact_id, dealer_id, sku_id)] = qty
+        - vehicle_load[(day, fact_id, dealer_id, vehicle_id, vehicle_type)] = occupied_size
+        - non_fulfill[(dealer_id, sku_id)] = non_fulfill_qty
+        - sku_inv_left[(fact_id, sku_id, day)] = inv_left
+        """
         try:
             # 订单履行情况
             if not self.df_result.empty:
@@ -267,8 +302,12 @@ class OutPutData:
         except Exception as e:
             logger.error(f"生成字典索引失败: {str(e)}")
     
-    def _validate_data(self):
-        """验证数据完整性"""
+    def _validate_data(self) -> None:
+        """验证数据完整性
+        - 关键表是否为空
+        - 结果与汇总车辆ID一致性
+        - 非法负值检查
+        """
         issues = []
         
         # 检查关键数据是否为空
@@ -303,10 +342,17 @@ class OutPutData:
     def get_summary_stats(self) -> Dict[str, int]:
         """
         获取数据汇总统计
+        包含键：
+        - total_deliveries: 发运条目数（按 day,fact,dealer,sku 聚合后的字典大小）
+        - total_vehicles_used: 车辆装载条目数（按 day,fact,dealer,vehicle,veh_type）
+        - unfulfilled_demands: 未满足需求条目数（dealer,sku）
+        - inventory_records: 库存记录条目数（fact,sku,day）
+        - total_quantity_shipped: 总发运数量（来自 opt_result.qty）
+        - unique_vehicles: 唯一车辆数量（来自 opt_result.vehicle_id）
         
         Returns:
         --------
-        Dict[str, int] : 统计信息
+        Dict[str, int]
         """
         stats = {
             'total_deliveries': len(self.order_fulfill),

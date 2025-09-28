@@ -10,7 +10,7 @@ from pathlib import Path
 current_dir = Path(__file__).parent
 
 from ALNSCode.main import ALNSOptimizer
-from ALNSCode.alns_config import ALNSConfig
+from ALNSCode.alns_config import default_config as ALNSConfig
 
 def debug_main():
     """调试版本的主函数，增加库存验证"""

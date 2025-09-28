@@ -1,60 +1,60 @@
-Elapsed: 0.4468 seconds
+Elapsed: 0.6595 seconds
 
-         400002 function calls (398456 primitive calls) in 0.443 seconds
+         632790 function calls (630413 primitive calls) in 0.653 seconds
 
    Ordered by: cumulative time
-   List reduced from 913 to 50 due to restriction <50>
+   List reduced from 924 to 50 due to restriction <50>
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    0.000    0.000    0.446    0.446 D:\Gurobi_code\Problem2\scripts\profile_initial_solution.py:41(do_run)
-        1    0.000    0.000    0.394    0.394 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:357(initial_solution)
-        1    0.000    0.000    0.394    0.394 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:13(improved_initial_solution)
-        1    0.049    0.049    0.351    0.351 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:329(_parallel_allocation)
-        1    0.000    0.000    0.185    0.185 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\concurrent\futures\_base.py:646(__exit__)
-        1    0.000    0.000    0.185    0.185 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\concurrent\futures\thread.py:220(shutdown)
-        3    0.000    0.000    0.185    0.062 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\threading.py:1058(join)
-        3    0.001    0.000    0.185    0.062 {method 'join' of '_thread._ThreadHandle' objects}
-      3/1    0.001    0.000    0.184    0.184 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\threading.py:1000(_bootstrap)
-      3/1    0.000    0.000    0.184    0.184 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\threading.py:1027(_bootstrap_inner)
-      3/1    0.000    0.000    0.184    0.184 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\threading.py:983(run)
-        4    0.004    0.001    0.181    0.045 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\concurrent\futures\thread.py:165(submit)
-      4/2    0.001    0.000    0.175    0.088 {method 'get' of '_queue.SimpleQueue' objects}
-      3/1    0.000    0.000    0.175    0.175 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\concurrent\futures\thread.py:70(_worker)
-        4    0.004    0.001    0.171    0.043 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\concurrent\futures\thread.py:184(_adjust_thread_count)
-        3    0.000    0.000    0.159    0.053 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\threading.py:955(start)
-        3    0.003    0.001    0.159    0.053 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\threading.py:641(wait)
-        6    0.001    0.000    0.144    0.024 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\threading.py:327(wait)
-1942/1302    0.127    0.000    0.127    0.000 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:283(veh_loading)
-        6    0.000    0.000    0.093    0.015 <string>:2(__init__)
-        6    0.002    0.000    0.092    0.015 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:53(__post_init__)
-        1    0.026    0.026    0.082    0.082 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:473(_handle_unmet_demands)
-    31/24    0.004    0.000    0.071    0.003 {method 'acquire' of '_thread.lock' objects}
-      4/1    0.004    0.001    0.064    0.064 C:\Users\whxnt\AppData\Roaming\uv\python\cpython-3.13.7-windows-x86_64-none\Lib\concurrent\futures\thread.py:54(run)
-        1    0.000    0.000    0.040    0.040 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:152(load)
-        6    0.036    0.006    0.036    0.006 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:230(construct_indices)
-   177687    0.034    0.000    0.034    0.000 {method 'get' of 'dict' objects}
-        1    0.022    0.022    0.024    0.024 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:181(_prioritize_demands)
-    10864    0.007    0.000    0.022    0.000 {built-in method builtins.sum}
-        1    0.000    0.000    0.017    0.017 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:216(_load_all_dataframes)
-        6    0.000    0.000    0.017    0.003 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:93(_load_csv_safely)
-    37450    0.008    0.000    0.014    0.000 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:369(<genexpr>)
-        8    0.009    0.001    0.014    0.002 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:239(compute_inventory)
-        1    0.001    0.001    0.013    0.013 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:587(_repair_solution)
-        6    0.000    0.000    0.013    0.002 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\io\parsers\readers.py:868(read_csv)
-        1    0.003    0.003    0.013    0.013 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:670(_merge_small_vehicles)
-        6    0.000    0.000    0.013    0.002 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\io\parsers\readers.py:583(_read)
-        1    0.001    0.001    0.012    0.012 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:276(_compute_derived_data)
-        1    0.000    0.000    0.010    0.010 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:236(_process_dataframes)
-      4/1    0.017    0.004    0.009    0.009 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:98(_process_demand_group_for_pool)
-        6    0.000    0.000    0.008    0.001 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\io\parsers\readers.py:1907(read)
-        7    0.000    0.000    0.007    0.001 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\core\frame.py:694(__init__)
-    46902    0.007    0.000    0.007    0.000 {method 'items' of 'dict' objects}
-        7    0.000    0.000    0.007    0.001 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\core\internals\construction.py:423(dict_to_mgr)
-        3    0.000    0.000    0.006    0.002 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\core\frame.py:6000(set_index)
-        6    0.000    0.000    0.006    0.001 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:130(_convert_dataframe_types)
-     2185    0.003    0.000    0.006    0.000 {method 'sort' of 'list' objects}
-     1942    0.003    0.000    0.005    0.000 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:568(_select_best_vehicle)
-     3368    0.002    0.000    0.005    0.000 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:696(veh_volume)
-    30/23    0.000    0.000    0.005    0.000 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\core\series.py:389(__init__)
+        1    0.000    0.000    0.659    0.659 D:\Gurobi_code\Problem2\scripts\profile_initial_solution.py:41(do_run)
+        1    0.000    0.000    0.599    0.599 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:666(initial_solution)
+        1    0.001    0.001    0.599    0.599 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:87(improved_initial_solution)
+        1    0.108    0.108    0.510    0.510 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:390(_parallel_allocation)
+        5    0.004    0.001    0.254    0.051 D:\Software\Miniconda\Lib\threading.py:641(wait)
+        1    0.000    0.000    0.245    0.245 D:\Software\Miniconda\Lib\concurrent\futures\_base.py:646(__exit__)
+        1    0.000    0.000    0.245    0.245 D:\Software\Miniconda\Lib\concurrent\futures\thread.py:220(shutdown)
+        4    0.000    0.000    0.245    0.061 D:\Software\Miniconda\Lib\threading.py:1058(join)
+        4    0.001    0.000    0.245    0.061 {method 'join' of '_thread._ThreadHandle' objects}
+      4/1    0.000    0.000    0.244    0.244 D:\Software\Miniconda\Lib\threading.py:1000(_bootstrap)
+      4/1    0.001    0.000    0.244    0.244 D:\Software\Miniconda\Lib\threading.py:1027(_bootstrap_inner)
+      4/1    0.004    0.001    0.244    0.244 D:\Software\Miniconda\Lib\threading.py:983(run)
+      4/1    0.006    0.002    0.244    0.244 D:\Software\Miniconda\Lib\concurrent\futures\thread.py:70(_worker)
+      4/1    0.000    0.000    0.234    0.234 {method 'get' of '_queue.SimpleQueue' objects}
+        9    0.000    0.000    0.229    0.025 D:\Software\Miniconda\Lib\threading.py:327(wait)
+        4    0.008    0.002    0.209    0.052 D:\Software\Miniconda\Lib\concurrent\futures\thread.py:165(submit)
+        5    0.000    0.000    0.192    0.038 D:\Software\Miniconda\Lib\concurrent\futures\_base.py:199(as_completed)
+        4    0.004    0.001    0.116    0.029 D:\Software\Miniconda\Lib\concurrent\futures\thread.py:184(_adjust_thread_count)
+        1    0.075    0.075    0.104    0.104 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:516(_handle_unmet_demands)
+ 1254/679    0.072    0.000    0.082    0.000 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:500(veh_loading)
+      4/1    0.002    0.000    0.068    0.068 D:\Software\Miniconda\Lib\concurrent\futures\thread.py:54(run)
+      4/1    0.028    0.007    0.068    0.068 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:197(_process_demand_group_for_pool)
+   266449    0.063    0.000    0.063    0.000 {method 'get' of 'dict' objects}
+        4    0.000    0.000    0.063    0.016 D:\Software\Miniconda\Lib\threading.py:955(start)
+        1    0.000    0.000    0.054    0.054 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:257(load)
+        1    0.048    0.048    0.051    0.051 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:268(_prioritize_demands)
+    14721    0.012    0.000    0.038    0.000 {built-in method builtins.sum}
+        1    0.001    0.001    0.028    0.028 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:598(_repair_solution)
+        6    0.026    0.004    0.026    0.004 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:378(construct_indices)
+        1    0.006    0.006    0.026    0.026 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:665(_merge_small_vehicles)
+        8    0.018    0.002    0.026    0.003 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:396(compute_inventory)
+        6    0.003    0.000    0.026    0.004 D:\Gurobi_code\Problem2\ALNSCode\alnsopt.py:84(__post_init__)
+        1    0.000    0.000    0.025    0.025 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:316(_load_all_dataframes)
+        6    0.000    0.000    0.025    0.004 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:166(_load_csv_safely)
+    53240    0.013    0.000    0.024    0.000 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:425(<genexpr>)
+        6    0.000    0.000    0.019    0.003 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\io\parsers\readers.py:868(read_csv)
+        6    0.000    0.000    0.019    0.003 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\io\parsers\readers.py:583(_read)
+        1    0.002    0.002    0.015    0.015 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:397(_compute_derived_data)
+    45/36    0.004    0.000    0.015    0.000 {method 'acquire' of '_thread.lock' objects}
+        1    0.000    0.000    0.013    0.013 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:350(_process_dataframes)
+1551/1254    0.005    0.000    0.012    0.000 D:\Gurobi_code\Problem2\ALNSCode\vehicle.py:223(load)
+     4067    0.004    0.000    0.010    0.000 D:\Gurobi_code\Problem2\ALNSCode\initial_solution_utils.py:689(veh_volume)
+        6    0.000    0.000    0.010    0.002 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\io\parsers\readers.py:1907(read)
+2282/1985    0.007    0.000    0.010    0.000 D:\Gurobi_code\Problem2\ALNSCode\vehicle.py:54(__setitem__)
+     3018    0.004    0.000    0.009    0.000 {method 'sort' of 'list' objects}
+    49112    0.009    0.000    0.009    0.000 {method 'items' of 'dict' objects}
+        7    0.000    0.000    0.009    0.001 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\core\frame.py:694(__init__)
+        7    0.000    0.000    0.008    0.001 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\core\internals\construction.py:423(dict_to_mgr)
+        6    0.000    0.000    0.008    0.001 D:\Gurobi_code\Problem2\.venv\Lib\site-packages\pandas\io\parsers\readers.py:1575(__init__)
+        6    0.000    0.000    0.008    0.001 D:\Gurobi_code\Problem2\ALNSCode\InputDataALNS.py:227(_convert_dataframe_types)
 
 

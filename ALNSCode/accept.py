@@ -1,147 +1,188 @@
-from .InputDataALNS import DataALNS
-from .optutility import LogPrinter
-import time
+"""
+模块: accept.py
+职责:
+- 提供一个用于在候选解目标值上施加未满足需求惩罚的包装器（DemandConstraintAccept）
+- 通过 CandidateProxy 在不破坏原始 state 接口的前提下调整 objective() 返回值
+- 统计调用/接受次数与累计惩罚，便于日志/调试/参数调整
 
-log_printer = LogPrinter(time.time())
+注:
+- 注释风格与项目中 ALNSCode/alnsopt.py 保持一致，采用详细中文说明与设计意图注释，
+  目的是便于维护者理解实现细节和为何采用这种实现方式。
+"""
+from typing import Any, Dict
+import numpy as np
 
-# 创建一个自定义的接受准则，优先接受满足需求的解但不完全禁止不满足需求的解
+class _CandidateProxy:
+    """
+    候选解代理（Proxy）:
+    - 将原始候选状态包装起来，覆盖 objective() 方法以在原始目标上加上计算得到的惩罚
+    - 其它属性/方法委托给原始对象，以保持兼容性（例如 validate(), compute_shipped() 等）
+    设计动机:
+    - 不修改原始 candidate_state 对象的实现，仅在接受判定时临时改变 objective 行为
+    - 便于将违约惩罚与任意基础接收准则（如 SimulatedAnnealing 等）组合使用
+    """
+    def __init__(self, original, penalty: float):
+        self._orig = original
+        self._penalty = float(penalty)
+
+    def objective(self):
+        """
+        返回被惩罚后的目标值:
+        - 尝试从原始对象获取目标值并转为 float
+        - 若原始目标不可计算（异常或非有限），则保留该值（例如 inf）
+        - 否则在原始目标上加上事先计算的惩罚值并返回
+        """
+        try:
+            base = float(self._orig.objective())
+        except Exception:
+            base = float('inf')
+        if not np.isfinite(base):
+            return base
+        return base + self._penalty
+
+    def validate(self):
+        """直接委托 validate 调用，保持行为一致性。"""
+        return self._orig.validate()
+
+    def compute_shipped(self):
+        """
+        保持与现有测试与调用的兼容性：
+        - 某些状态对象可能实现 compute_shipped()，外部测试会直接查询该方法
+        - 若包装的原始对象实现了该方法，则委托执行；否则返回空字典
+        """
+        if hasattr(self._orig, "compute_shipped"):
+            return self._orig.compute_shipped()
+        return {}
+
+    def __getattr__(self, name: str) -> Any:
+        """
+        对未显式覆盖的属性访问进行委托：
+        - 例如 .vehicles, .s_ikt 或其它方法/属性均由原始对象提供
+        - 该实现确保代理对象在绝大多数上下文中可替代原始对象
+        """
+        return getattr(self._orig, name)
+
+
 class DemandConstraintAccept:
-    def __init__(self, accept_criterion, data: DataALNS, penalty_factor=1000.0):
+    """
+    包装式接收判定器（Acceptor）:
+    - 在将候选态传递给基础接收器之前, 检测并基于未满足的需求计算惩罚
+    - 将候选态替换为 _CandidateProxy，从而在不修改原始状态对象的前提下影响 objective 返回值
+    - 兼容现有的基础接收器接口（例如 SimulatedAnnealing），并记录统计信息用于分析
+
+    最小接口契约（被测试代码所期待）:
+      - 对象为可调用: (rng, best_state, current_state, candidate_state) -> bool
+      - get_statistics() -> dict
+
+    惩罚计算规则:
+      - 首先尝试调用 candidate_state.validate() 获取 (feasible, violations)
+      - 若 infeasible 且 violations 中包含 "unmet_demand" 且为列表:
+          * 尝试对 unmet_list 中每个元素以 (demand - shipped) 聚合求和 unmet_total
+          * 惩罚 penalty = penalty_factor * unmet_total
+      - 否则:
+          * 退化为 penalty = penalty_factor * len(unmet_list) （或 1.0 作为兜底）
+    """
+    def __init__(self, base_acceptor, data, penalty_factor: float = 1000.0):
         """
-        自定义接受准则，通过惩罚不满足需求的解来引导搜索
-        
-        Parameters:
-        -----------
-        accept_criterion : AcceptanceCriterion
-            基础接受准则（如模拟退火）
-        data : DataALNS
-            数据实例
-        penalty_factor : float
-            对不满足需求的解的惩罚因子
+        参数:
+          - base_acceptor: 基础接收准则（callable 或具有相应调用签名的对象）
+          - data: 问题数据引用（用于可能的额外统计/日志）
+          - penalty_factor: 将 unmet demand 数量/量级映射到目标值尺度上的放大系数
+        统计:
+          - _calls: 被调用的次数
+          - _accepted: 被接受的次数
+          - _total_penalty: 累积应用的惩罚，用于计算平均惩罚等
         """
-        self.accept_criterion = accept_criterion
+        self.base = base_acceptor
         self.data = data
-        self.penalty_factor = penalty_factor
-        
-        # 统计信息
-        self.total_evaluations = 0
-        self.feasible_accepted = 0
-        self.infeasible_accepted = 0
-        self.feasible_rejected = 0
-        self.infeasible_rejected = 0
-        
-    def __call__(self, rng, best, current, candidate):
+        self.penalty_factor = float(penalty_factor)
+
+        # statistics
+        self._calls = 0
+        self._accepted = 0
+        self._total_penalty = 0.0
+
+    def __call__(self, rng, best_state, current_state, candidate_state) -> bool:
         """
-        接受准则的主要逻辑
-        
-        Parameters:
-        -----------
-        rng : numpy.random.Generator
-            随机数生成器
-        best : SolutionState
-            迄今为止的最优解
-        current : SolutionState
-            当前解
-        candidate : SolutionState
-            候选解
-            
-        Returns:
-        --------
-        bool : 是否接受候选解
+        被调用执行接受判定:
+        1) 增加调用计数
+        2) 通过 candidate_state.validate() 判断可行性及获取违约信息（兼容异常）
+        3) 依据 violations 计算 penalty
+        4) 用 _CandidateProxy 包装 candidate_state，使 objective() 返回值带上惩罚
+        5) 委托给基础接收器进行接受判定（兼容多种调用签名）
+        6) 记录接受统计并返回结果
         """
-        self.total_evaluations += 1
-        
-        # 使用统一的验证方法检查候选解的可行性
-        is_feasible, violations = candidate.validate()
-        
-        # 计算调整后的目标函数值（对不可行解添加惩罚）
-        adjusted_objective = candidate.objective()
-        if not is_feasible:
-            # 计算违反约束的惩罚
-            unmet_demands = violations.get('unmet_demand', [])
-            total_unmet = sum(d['demand'] - d['shipped'] for d in unmet_demands)
-            adjusted_objective += self.penalty_factor * total_unmet
-        
-        # 创建临时解对象用于基础接受准则判断
-        class AdjustedSolution:
-            def __init__(self, original_solution, adjusted_obj):
-                self._original = original_solution
-                self._adjusted_obj = adjusted_obj
-            
-            def objective(self):
-                return self._adjusted_obj
-            
-            def __getattr__(self, name):
-                return getattr(self._original, name)
-        
-        adjusted_candidate = AdjustedSolution(candidate, adjusted_objective)
-        
-        # 使用基础接受准则判断（考虑惩罚后的目标值）
-        accept = self.accept_criterion(rng, best, current, adjusted_candidate)
-        
-        # 更新统计信息
-        if accept:
-            if is_feasible:
-                self.feasible_accepted += 1
+        self._calls += 1
+
+        # 尝试获取可行性与违约详情; 若 validate 抛异常则认为可行且无违约
+        try:
+            feasible, violations = candidate_state.validate()
+        except Exception:
+            feasible, violations = True, {}
+
+        penalty = 0.0
+        if not feasible:
+            # 关注 unmet_demand 条目（如果存在）
+            unmet = violations.get("unmet_demand", [])
+            if isinstance(unmet, list) and unmet:
+                # 尝试解析每个违约项的 'demand' 与 'shipped' 字段以计算未满足总量
+                unmet_total = 0.0
+                for it in unmet:
+                    try:
+                        d = float(it.get("demand", 0))
+                        s = float(it.get("shipped", 0))
+                        unmet_total += max(0.0, d - s)
+                    except Exception:
+                        # 若无法解析具体数值, 退化为按条目计数
+                        unmet_total += 1.0
+                penalty = self.penalty_factor * unmet_total
             else:
-                self.infeasible_accepted += 1
-        else:
-            if is_feasible:
-                self.feasible_rejected += 1
-            else:
-                self.infeasible_rejected += 1
-        
-        # 每100次评估输出一次统计信息
-        if self.total_evaluations % 100 == 0:
-            self._print_statistics(is_feasible, violations if not is_feasible else None)
-        
-        return accept
-    
-    def _print_statistics(self, current_feasible, violations=None):
+                # 兜底策略: 若 unmet 不是非空列表, 则按条目数量或默认 1.0 计惩罚
+                penalty = self.penalty_factor * (len(unmet) if isinstance(unmet, list) else 1.0)
+
+        # 记录用于统计的惩罚累计值
+        self._total_penalty += float(penalty)
+
+        # 使用代理对象包装候选解，使其 objective() 返回 base + penalty
+        proxy = _CandidateProxy(candidate_state, penalty)
+
+        # Delegate to base acceptor (most acceptors follow signature used in tests)
+        # 兼容多种可能的基础接收器签名: 首先尝试常见四参数签名, 若 TypeError 则尝试回退签名
+        try:
+            accepted = bool(self.base(rng, best_state, current_state, proxy))
+        except TypeError:
+            # 某些实现可能使用 (best_state, current_state, candidate_state) 之类的签名
+            try:
+                accepted = bool(self.base(best_state, current_state, proxy))
+            except Exception:
+                # 若仍然失败, 将接受视为 False（保守策略）
+                accepted = False
+        except Exception:
+            # 其它异常统一捕获并视为不接受
+            accepted = False
+
+        if accepted:
+            self._accepted += 1
+        return accepted
+
+    def get_statistics(self) -> Dict[str, float]:
         """
-        打印统计信息
-        
-        Parameters:
-        -----------
-        current_feasible : bool
-            当前解是否可行
-        violations : dict, optional
-            违反约束的详细信息
+        返回统计信息摘要:
+          - calls: 总调用次数
+          - accepted: 被接受次数
+          - accept_rate: 接受率
+          - avg_penalty: 平均每次调用应用的惩罚
+          - total_penalty: 累计惩罚
+        该信息可用于调试、调参或记录日志。
         """
-        total = self.total_evaluations
-        accept_rate = (self.feasible_accepted + self.infeasible_accepted) / total
-        feasible_rate = (self.feasible_accepted + self.feasible_rejected) / total
-        
-        log_printer.print(f"=== Acceptance Statistics (after {total} evaluations) ===")
-        log_printer.print(f"Overall accept rate: {accept_rate:.2%}")
-        log_printer.print(f"Feasible solutions: {feasible_rate:.2%}")
-        log_printer.print(f"Feasible accepted: {self.feasible_accepted}, rejected: {self.feasible_rejected}")
-        log_printer.print(f"Infeasible accepted: {self.infeasible_accepted}, rejected: {self.infeasible_rejected}")
-        
-        if not current_feasible and violations:
-            unmet_demands = violations.get('unmet_demand', [])
-            if unmet_demands:
-                total_unmet = sum(d['demand'] - d['shipped'] for d in unmet_demands)
-                log_printer.print(f"Current solution: {len(unmet_demands)} unmet demands, total unmet: {total_unmet}")
-        
-        log_printer.print("=" * 50)
-    
-    def get_statistics(self):
-        """
-        获取统计信息
-        
-        Returns:
-        --------
-        dict : 统计信息字典
-        """
-        if self.total_evaluations == 0:
-            return {}
-        
+        calls = self._calls
+        accepted = self._accepted
+        accept_rate = (accepted / calls) if calls else 0.0
+        avg_penalty = (self._total_penalty / calls) if calls else 0.0
         return {
-            'total_evaluations': self.total_evaluations,
-            'overall_accept_rate': (self.feasible_accepted + self.infeasible_accepted) / self.total_evaluations,
-            'feasible_accept_rate': self.feasible_accepted / (self.feasible_accepted + self.feasible_rejected) if (self.feasible_accepted + self.feasible_rejected) > 0 else 0,
-            'infeasible_accept_rate': self.infeasible_accepted / (self.infeasible_accepted + self.infeasible_rejected) if (self.infeasible_accepted + self.infeasible_rejected) > 0 else 0,
-            'feasible_solutions_ratio': (self.feasible_accepted + self.feasible_rejected) / self.total_evaluations,
-            'penalty_factor': self.penalty_factor
+            "calls": calls,
+            "accepted": accepted,
+            "accept_rate": float(accept_rate),
+            "avg_penalty": float(avg_penalty),
+            "total_penalty": float(self._total_penalty),
         }

@@ -1,0 +1,4 @@
+Running on dataset: multiple-periods\small\dataset_1
+Running on dataset: multiple-periods\medium\dataset_1
+Running on dataset: multiple-periods\large\dataset_1
+Wrote real_benchmark_results.txt

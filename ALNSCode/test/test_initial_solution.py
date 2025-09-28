@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from ALNSCode.alnsopt import initial_solution, SolutionState
 from ALNSCode.InputDataALNS import DataALNS
 
-from ALNSCode.alns_config import ALNSConfig
+from ALNSCode.alns_config import default_config as ALNSConfig
 DATASET_TYPE = ALNSConfig.DATASET_TYPE
 DATASET_IDX = ALNSConfig.DATASET_IDX
 

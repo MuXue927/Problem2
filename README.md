@@ -1,8 +1,32 @@
 # Problem2 — 本地开发与测试指南
 
-简短说明：本仓库实现了多周期产品配送问题的 ALNS/CG/Monolithic 算法实现。下面说明如何在本地（Windows + PowerShell）创建虚拟环境、进行可编辑安装（editable install）并运行测试。
+简短说明：本仓库实现了多周期产品配送问题的 ALNS/CG(The mathematical model of CG may be doubtful, not fix yet)/Monolithic 算法实现。下面说明如何在本地（Windows + PowerShell）创建虚拟环境、进行可编辑安装（editable install）并运行测试。
 
 > 目标：使用项目内的 `.venv`、让 `ALNSCode` 包在该环境可导入、并用 `pytest` 运行本仓库的测试。
+
+## 快速运行（Quick start）
+
+如果你只想快速在本地运行项目并验证一遍（Windows + PowerShell），下面是一组最小命令：
+
+```powershell
+# 1) 在项目根创建虚拟环境（只需执行一次）
+python -m venv .venv
+
+# 2) 激活虚拟环境（每次新开终端时执行）
+& .\.venv\Scripts\Activate.ps1
+
+# 3) 升级安装工具并以 editable 模式安装项目（可选但推荐）
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -e .
+
+# 4) 以包方式运行主模块（推荐）
+python -m ALNSCode.main
+
+# 5) 运行仓库内测试（示例，仅运行 ALNSCode 下的测试）
+python -m pytest ALNSCode/test -q
+```
+
+说明：务必使用 `python -m ALNSCode.main`（包方式）或先 `pip install -e .` 再运行，这样相对导入才会正确工作。不要直接用 `python ALNSCode/main.py`（会导致相对导入失败）。
 
 ## 1. 系统与前提
 - 操作系统：Windows（PowerShell）

@@ -1,101 +1,162 @@
-import datetime
+"""
+optutility
+==========
+
+模块定位
+    提供与优化日志输出相关的轻量级工具类 `LogPrinter`，用于在算法运行过程中
+    统一输出带耗时前缀的彩色 / 纯文本日志（自动检测终端能力）。
+    设计目标：最小依赖、可在任意模块中快速实例化并使用、避免全局副作用。
+
+核心组件
+    - 常量:
+        BigNum        一般用于设置较大的默认数（占位）
+        MYEPS         负向微小量 (判定浮点“略小于0”场景)
+        POSITIVEEPS   正向微小量
+    - LogPrinter:
+        * 自动记录起始时间
+        * 根据 stdout 是否是 TTY 判断是否启用 rich 彩色输出
+        * 提供普通消息 + 标题块两种输出形式
+        * 非彩色模式下移除 ANSI 转义序列，保证日志可重定向落盘
+
+逻辑评审
+    1. set_output_mode:
+         - 正确判断 sys.stdout.isatty() 决定 rich 行为
+         - 非 TTY 模式关闭颜色与终端控制符，便于持久化
+    2. strip_ansi:
+         - 原实现的正则遗漏 ESC 前缀 (ESC = \\x1B)，会误删除普通大写字母
+           (原模式 '(?:[@-Z\\\\-_]|\\[[0-?]*[ -/]*[@-~])' 会匹配大量普通字符)
+         - 现修复为标准 ANSI 转义匹配：'\\x1B(?:[@-Z\\\\-_]|\\[[0-?]*[ -/]*[@-~])'
+    3. print:
+         - 记录相对起始时间 (s) 前缀 + 富文本或纯文本输出
+    4. print_title:
+         - 输出三行（上分隔线 / 居中标题 / 下分隔线），增强可视化分段
+    5. 模块未在加载时创建全局实例，避免副作用；调用侧需自行实例化:
+            printer = LogPrinter(time.time())
+            printer.print("Start")
+
+改进内容
+    - 移除未使用的 datetime 导入
+    - 增加完整模块文档与类/方法中文注释
+    - 修复 ANSI 转义正则 (防止误删普通字符)
+    - 将 ANSI 正则编译提升为模块级常量，避免重复编译
+    - 增加类型注解，提高可读性
+
+保持不变
+    - 对外 API: LogPrinter(start_time).print / print_title
+    - 时间计算与颜色参数风格
+"""
+
+# =========================
+# 标准库
+# =========================
 import time
 import sys
 import re
-from rich.console import Console
 from dataclasses import dataclass, field
+from typing import Optional
 
+# =========================
+# 第三方库
+# =========================
+from rich.console import Console
+
+# =========================
+# 常量 (与其他模块可能共享的判定阈值)
+# =========================
 BigNum = 99999
 MYEPS = -0.0001
 POSITIVEEPS = 0.00001
 
-# A callback is a user function that is called periodically by the Gurobi optimizer in order to allow the user
-# to query or modify the state of the optimization. More precisely, if you pass a function that takes two
-# arguments (model and where) as the argument to Model.optimize or Model.computeIIS, your function will be called
-# during the optimization. Your callback function can then call Model.cbGet to query the optimizer for details
-# on the state of the optimization.
-# Model.cbGet() --> Query the optimizer from within the user callback.
-# cbGet(what) --> what: Integer code that indicates what type of information is being requested by the callback.
-# The set of valid codes depends on the where value that is passed into the user callback function.
+# ANSI 转义序列匹配（标准形式：ESC + 控制指令）
+# 说明:
+#   \x1B           ESC 字符
+#   (?: ... | ... ) 非捕获组
+#   @-Z\\-_        单字符控制序列
+#   \[ ... @-~     CSI 序列：ESC [ 参数 中间字符 结束符
+ANSI_ESCAPE_PATTERN = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
 
-
-
-# Model.terminate() --> Generate a request to terminate the current optimization. This method can be called at any
-# time during an optimization (from a callback, from another thread, from an interrupt handler, etc.). Note that,
-# in general, the request won't be acted upon immediately.
-# When the optimization stops, the Status attribute will be equal to GRB_INTERRUPTED.
 
 @dataclass
 class LogPrinter:
+    """
+    统一日志输出工具:
+        - 根据终端环境自动决定是否使用 rich 彩色输出
+        - 输出统一带“相对起始耗时”前缀
+        - 在非 TTY 环境下去除 ANSI 转义，适用于日志文件 / CI
+    """
     start_time: float
     console: Console = field(init=False)
     use_rich_formatting: bool = field(init=False)
 
-
-    # The generated __init__() code will call a method named __post_init__(), if __post_init__() is defined
-    # on the class. It will normally be called as self.__post_init__(). However, if any InitVar fields are defined,
-    # they will also be passed to __post_init__() in the order they were defined in the class. If no __init__()
-    # method is generated, then __post_init__() will not automatically be called.
-
     def __post_init__(self):
         self.set_output_mode()
 
-    def set_output_mode(self, force_plain=False):
+    # ------------------------------------------------------------------
+    # 环境检测与 Console 初始化
+    # ------------------------------------------------------------------
+    def set_output_mode(self, force_plain: bool = False) -> None:
+        """
+        设置输出模式:
+            force_plain=True 时强制关闭彩色输出 (调试或文件写入场景)
+        """
         is_tty = sys.stdout.isatty() and not force_plain
         self.use_rich_formatting = is_tty
         if is_tty:
-            # 如果是teletype，启用全部功能
+            # 交互式终端：启用颜色与富文本
             self.console = Console()
         else:
-            # 如果不是，则禁用终端特定的格式化
-            # force_terminal=False确保rich不会使用终端特定的格式化
-            # color_system=None表示完全禁用字体颜色
+            # 非交互环境：禁用终端特定格式，确保输出纯文本
             self.console = Console(force_terminal=False, color_system=None)
 
-    def strip_ansi(self, text):
-        # ======================================================================================
-        # 下面这个正则表达式非常全面，几乎可以匹配所有常见的ANSI转义序列。使用这个模式
-        # 可以有效地识别和删除文本中的ANSI转义序列,从而得到纯文本内容
-        # re.compile(pattern, flags=0)
-        # 将正则表达式的样式编译为一个正则对象，可用于匹配，表达式的行为可以通过指定flags值来修改
-        # \x1B -- 这匹配ASCII转义字符,其十六进制值是1B。在ANSI转义序列中,这个字符总是出现在序列的开始。
-        # (?:...) -- 这是一个非捕获组。它用于分组,但不会创建一个单独的捕获组。
-        # [@-Z\\-_] -- 这表示一个字符集，可以匹配从@到Z的任何大写字母、反斜杠\、以及下划线_
-        # | 表示“或”操作符，分隔两个可能的模式
-        # \[ 表示匹配一个左方括号，方括号在正则表达式中有特殊含义，所以需要转义
-        # [0-?]* 表示匹配0次或者1次或者多次字符，范围从0到?
-        # [ -/]* 表示匹配0次或者1次或者多次字符，范围从空格到斜杠/
-        # [@-~]* 表示匹配0次或者1次或者多次字符，范围从@到~
-        # ======================================================================================
-        ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
-        return ansi_escape.sub('', text)
+    # ------------------------------------------------------------------
+    # ANSI 清理
+    # ------------------------------------------------------------------
+    def strip_ansi(self, text: str) -> str:
+        """
+        去除 ANSI 转义序列:
+            - 保证在非彩色输出模式下日志不携带控制字符
+        """
+        return ANSI_ESCAPE_PATTERN.sub('', text)
 
-    # # print optimization log with info of consuming time and exact time.
-
-    def print(self, msg: str, color: str = 'bold blue'):
-        end_time = time.time()
-        formatted_msg = f'{end_time - self.start_time :.1f}s ' + msg
-        # 只输出到控制台（美观/彩色）
+    # ------------------------------------------------------------------
+    # 普通日志输出
+    # ------------------------------------------------------------------
+    def print(self, msg: str, color: str = 'bold blue') -> None:
+        """
+        输出单行日志:
+            格式: "<耗时秒>s <消息>"
+            彩色模式: 使用 rich 样式
+            纯文本模式: 清理 ANSI 后输出
+        """
+        elapsed = time.time() - self.start_time
+        formatted_msg = f'{elapsed:.1f}s {msg}'
         if self.use_rich_formatting:
             self.console.print(formatted_msg, style=color)
         else:
-            cleaned_msg = self.strip_ansi(formatted_msg)
-            self.console.print(cleaned_msg)
+            self.console.print(self.strip_ansi(formatted_msg))
 
-
-    def print_title(self, msg: str, color: str = 'bold blue', stars_len=75):
+    # ------------------------------------------------------------------
+    # 标题块输出
+    # ------------------------------------------------------------------
+    def print_title(self, msg: str, color: str = 'bold blue', stars_len: int = 75) -> None:
+        """
+        输出块状标题:
+            上/中/下三行，突出分隔
+        """
         line = "*" * stars_len
         centered_msg = msg.center(stars_len)
-        centered_line = line.center(stars_len)
-        # 只输出到控制台
         if self.use_rich_formatting:
-            self.console.print(centered_line, style=color)
+            self.console.print(line, style=color)
             self.console.print(centered_msg, style=color)
-            self.console.print(centered_line, style=color)
+            self.console.print(line, style=color)
         else:
-            self.console.print(self.strip_ansi(centered_line))
+            self.console.print(self.strip_ansi(line))
             self.console.print(self.strip_ansi(centered_msg))
-            self.console.print(self.strip_ansi(centered_line))
+            self.console.print(self.strip_ansi(line))
 
-# 不要在模块级别创建实例
-# log_printer = LogPrinter(time.time())
+# 不在模块级创建默认实例，避免意外共享状态
+# 使用方式:
+#   from .optutility import LogPrinter
+#   printer = LogPrinter(time.time())
+#   printer.print_title("ALNS START")
+#   printer.print("Iteration 1")

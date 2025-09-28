@@ -6,7 +6,7 @@ import os
 
 try:
     from functools import partial
-    from ALNSCode.alns_config import ALNSConfig
+    from ALNSCode.alns_config import default_config as ALNSConfig
     
     # 简化的测试函数
     def mock_random_removal(state, rng, degree=0.25):
@@ -61,9 +61,9 @@ try:
         operator = register_destroy_operators_test()
         
         # 这个调用之前会失败，现在应该成功
-    alns.add_destroy_operator(operator)
+        alns.add_destroy_operator(operator)
         
-    assert True
+        assert True
     
     if __name__ == "__main__":
         print("=== ALNS partial修复验证 ===")

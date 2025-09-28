@@ -1,14 +1,36 @@
+"""
+check_solution
+
+模块定位
+    对 ALNS 求解产生的输出结果进行系统化一致性与可行性检查（需求满足、基地容量、
+    车辆容量、库存流转等），并生成可读的验证摘要，辅助问题定位与结果复核。
+
+设计原则
+    - 不修改输入/输出数据，只做只读校验
+    - 统一日志输出（logger），尽量避免在库内修改全局 logging 配置
+    - 校验方法解耦为独立函数，便于单独调试与扩展
+
+输入/输出
+    - 输入：DataALNS（静态数据）与 OutPutData（算法输出）
+    - 输出：ValidationResult 列表与总体可行性布尔值
+"""
+
+# =========================
+# 标准库
+# =========================
 import os
-import pandas as pd
-from .InputDataALNS import DataALNS
-from .OutputDataALNS import OutPutData
-from typing import Tuple, Dict, List
 import logging
 from dataclasses import dataclass
-from .alns_config import ALNSConfig
+from typing import Tuple, Dict, List
 
-# 设置日志
-logging.basicConfig(level=logging.INFO)
+# =========================
+# 项目内部
+# =========================
+from .InputDataALNS import DataALNS
+from .OutputDataALNS import OutPutData
+from .alns_config import default_config as ALNSConfig
+
+# 设置日志（建议在主程序统一配置 logging，这里仅获取模块级 logger）
 logger = logging.getLogger(__name__)
 
 # 获取当前.py文件所在的目录，这样可以确保路径正确，即使文件被移动到其他位置也不会影响
@@ -111,7 +133,7 @@ class SolutionValidator:
                     if (plant_id, sku_id, day) in self.output_data.sku_inv_left:
                         total_inventory += self.output_data.sku_inv_left[(plant_id, sku_id, day)]
                 
-                # 检查是否超过库存上限
+                # 检查是否超过库存上限, 库存上限为存储SKU的数量上限
                 capacity_limit = self.input_data.plant_inv_limit[plant_id]
                 if total_inventory > capacity_limit:
                     excess = total_inventory - capacity_limit
@@ -188,6 +210,9 @@ class SolutionValidator:
             'max_inconsistency': 0
         }
         
+        # 记录比较允许的误差阈值（可由集中配置覆盖）
+        record_eps = getattr(ALNSConfig, "RECORD_INCONSISTENCY_EPS", 1e-6)
+        
         # 遍历每个工厂的每种SKU
         for plant_id in self.input_data.plants:
             for sku_id in self.input_data.all_skus:
@@ -216,7 +241,7 @@ class SolutionValidator:
                     # 检查与记录的剩余库存是否一致
                     recorded_inv = self.output_data.sku_inv_left.get((plant_id, sku_id, day), 0)
                     inconsistency = abs(current_inv - recorded_inv)
-                    if inconsistency > 1e-6:  # 使用小误差范围进行比较
+                    if inconsistency > record_eps:  # 使用可配置的小误差范围进行比较
                         details['record_inconsistencies'] += 1
                         details['max_inconsistency'] = max(details['max_inconsistency'], inconsistency)
                         violations.append(
@@ -296,8 +321,15 @@ class SolutionValidator:
         print("="*60)
 
 
-def check_solution(input_loc, output_loc):
-    """主检查函数"""
+def check_solution(input_loc: str, output_loc: str) -> bool:
+    """
+    主检查函数
+    参数:
+        input_loc   输入数据根目录（datasets/...）
+        output_loc  输出数据根目录（OutPut-ALNS/...）
+    返回:
+        bool        是否通过全部校验
+    """
     try:
         medium_path = f'dataset_{ALNSConfig.DATASET_IDX}'
         dataset_output_loc = os.path.join(output_loc, medium_path)
